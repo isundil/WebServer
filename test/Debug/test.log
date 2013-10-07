@@ -1,0 +1,8 @@
+﻿La génération a démarré 07/10/2013 13:14:57.
+     1>Projet "D:\Project\WebServer\test\test.vcxproj" sur le nœud 2 (Clean cible(s)).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\v120\Microsoft.CppClean.targets(76,5): warning : The process cannot access the file 'C:\PROGRAM FILES (X86)\STEAM\GAMEOVERLAYRENDERER.LOG' because it is being used by another process.
+     1>Génération du projet "D:\Project\WebServer\test\test.vcxproj" terminée (Clean cible(s)).
+
+La génération a réussi.
+
+Temps écoulé 00:00:00.07
