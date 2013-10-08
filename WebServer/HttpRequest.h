@@ -7,7 +7,7 @@ class InvalidRequestException : public std::exception
 {
 public:
     InvalidRequestException() {};
-    const char * what() const
+    const char * what() const throw()
     {
         return "Invalid request: invalid verb";
     }

@@ -20,14 +20,14 @@ public: //public methods
     template <class T>void registerRoute()
     {
         routes.insert(routes.begin(), new T());
-    };
+    }
 
 public: //public nested
     class ClientSocket
     {
     public:
         ClientSocket(void *socket, void *infos);
-        ClientSocket::ClientSocket(const ClientSocket & o);
+        ClientSocket(const ClientSocket & o);
         ~ClientSocket();
 
         std::string getInfos() const;
