@@ -17,7 +17,7 @@ public:
     const WebServer *getServer() const;
     const HttpRequest * getRequest() const;
 
-    HttpClient * const addHeader(const std::string &key, const std::string & value);
+    HttpClient * addHeader(const std::string &key, const std::string & value);
     std::string getRespondStringCode(unsigned short code);
     void sendResponse();
     int respondCode(int respondCode = -1);
@@ -26,7 +26,7 @@ public:
     std::string debugResponse;
 
 private:
-    WebServer::ClientSocket * const getSocket() const;
+    WebServer::ClientSocket * getSocket() const;
     unsigned int getRespondSize();
 
 private:

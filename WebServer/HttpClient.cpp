@@ -109,7 +109,7 @@ const WebServer *HttpClient::getServer() const
     return server;
 }
 
-WebServer::ClientSocket * const HttpClient::getSocket() const
+WebServer::ClientSocket * HttpClient::getSocket() const
 {
     return socket;
 }
@@ -118,7 +118,7 @@ bool HttpClient::addParam(const std::string &param)
 {
     if (param == "")
         return false;
-    int pos;
+    size_t pos;
     if ((pos = param.find(":")) == param.npos)
         req->setRequest(param);
     else
@@ -136,7 +136,7 @@ const HttpRequest * HttpClient::getRequest() const
     return this->req;
 }
 
-HttpClient * const HttpClient::addHeader(const std::string &key, const std::string & value)
+HttpClient * HttpClient::addHeader(const std::string &key, const std::string & value)
 {
     header[key] = value;
     return this;

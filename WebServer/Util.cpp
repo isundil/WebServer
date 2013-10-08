@@ -3,11 +3,11 @@
 #include <string>
 #include "Util.h"
 
-std::list<const std::string> string_split(const std::string &_in, const char separator)
+std::list<std::string> string_split(const std::string &_in, const char separator)
 {
-    std::list<const std::string> result;
+    std::list<std::string> result;
     std::string in = _in;
-    int separatorIndex;
+    size_t separatorIndex;
 
     do
     {

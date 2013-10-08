@@ -12,7 +12,7 @@ public: //public methods
     WebServer(unsigned int port = 80);
     virtual ~WebServer();
 
-    WebServer * const setWebmaster(const std::string &webMasterEmail);
+    WebServer * setWebmaster(const std::string &webMasterEmail);
     std::string getWebmaster() const;
 
     void start();
