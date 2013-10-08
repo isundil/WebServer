@@ -9,7 +9,7 @@ SocketException::SocketException(const std::string & _function, const std::strin
     this->_what = ss.str();
 }
 
-const char * SocketException::what() const
+const char * SocketException::what() const throw()
 {
     return _what.c_str();
 }

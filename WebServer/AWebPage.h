@@ -10,14 +10,14 @@ class HttpClient;
 class AWebPage
 {
 public:
-    virtual void requestOption  (HttpClient *client) {};
-    virtual void requestGet     (HttpClient *client) {};
-    virtual void requestHead    (HttpClient *client) {};
-    virtual void requestPost    (HttpClient *client) {};
-    virtual void requestPut     (HttpClient *client) {};
-    virtual void requestDel     (HttpClient *client) {};
-    virtual void requestTrace   (HttpClient *client) {};
-    virtual void requestConnect (HttpClient *client) {};
+    virtual void requestOption  (HttpClient *client) { (void) client; };
+    virtual void requestGet     (HttpClient *client) { (void) client; };
+    virtual void requestHead    (HttpClient *client) { (void) client; };
+    virtual void requestPost    (HttpClient *client) { (void) client; };
+    virtual void requestPut     (HttpClient *client) { (void) client; };
+    virtual void requestDel     (HttpClient *client) { (void) client; };
+    virtual void requestTrace   (HttpClient *client) { (void) client; };
+    virtual void requestConnect (HttpClient *client) { (void) client; };
 
 protected:
     html::HtmlRootElement * const root;
@@ -57,14 +57,13 @@ public:
 private:
     bool urlMatch(const std::string & requestUrl, const std::string &myUrl)
     {
-        std::list<const std::string> reqUrlList = string_split(requestUrl, '/');
-        std::list<const std::string> routeUrlList = string_split(myUrl, '/');
-        int len = routeUrlList.size();
+        std::list<std::string> reqUrlList = string_split(requestUrl, '/');
+        std::list<std::string> routeUrlList = string_split(myUrl, '/');
 
         auto a = reqUrlList.cbegin();   //const iterator
         auto b = routeUrlList.cbegin(); //const iterator
 
-        for (true; a != reqUrlList.cend() && b != routeUrlList.cend(); true)
+        for (; a != reqUrlList.cend() && b != routeUrlList.cend();)
         {
             while (a != reqUrlList.cend() && (*a).size() == 0)
                 a++;

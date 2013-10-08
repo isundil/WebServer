@@ -3,7 +3,20 @@
 # include <WS2tcpip.h>
 # include <stdio.h>
 # pragma comment(lib, "ws2_32.lib")
-#endif
+#else
+# include <sys/socket.h>
+# include <netinet/in.h>
+# include <string.h>
+# include <unistd.h>
+# include <errno.h>
+# include <arpa/inet.h>
+typedef int SOCKET;
+# define WSAGetLastError() errno
+# define WSACleanup() ;
+# define closesocket(i) close(i)
+# define SOCKET_ERROR -1
+# define INVALID_SOCKET -1
+#endif //linux
 #include <sstream>
 #include "WebServer.hpp"
 #include "HttpClient.h"
@@ -12,13 +25,17 @@
 WebServer::Socket::Socket(unsigned int port)
 {
     /* TODO: WINDOWS CODE */
+#ifdef _WIN32
     WSAData data;
     int errcode;
+#endif
     SOCKET * sock = new SOCKET();
     sockaddr_in service;
 
+#ifdef _WIN32
     if ((errcode = WSAStartup(MAKEWORD(2, 2), &data)) != NO_ERROR)
         throw SocketException("WSAStartup()", "", errcode);
+#endif
     if ((*sock = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == INVALID_SOCKET)
     {
         WSACleanup();
@@ -49,12 +66,12 @@ WebServer::Socket::Socket(unsigned int port)
 WebServer::Socket::~Socket()
 {
     /* TODO: WINDOWS CODE */
-    SOCKET sock = *(SOCKET *)(this->socket);
+    SOCKET *sock = (SOCKET *)(this->socket);
     int closeReturn;
 
-    closeReturn = closesocket(sock);
+    closeReturn = closesocket(*sock);
     WSACleanup();
-    delete socket;
+    delete sock;
     if (closeReturn == SOCKET_ERROR)
         throw SocketException("closesocket()", "", WSAGetLastError());
     /* END TODO */
@@ -66,7 +83,11 @@ HttpClient * WebServer::Socket::waitForRequest()
     SOCKET sock = *(SOCKET *) (this->socket);
     SOCKET client = INVALID_SOCKET;
     sockaddr_in clientInfo;
+#ifdef _WIN32
     int sockSize = sizeof(clientInfo);
+#else
+    socklen_t sockSize = sizeof(clientInfo);
+#endif
 
     if ((client = accept(sock, (sockaddr *) &clientInfo, &sockSize)) == INVALID_SOCKET) /* END TODO */
         throw SocketException("accept()", "", WSAGetLastError());
@@ -153,7 +174,6 @@ std::string WebServer::ClientSocket::readLine()
     for (lastChar = bufIndex[0]; lastChar != bufIndex[1]; lastChar = (lastChar + 1) % 2048, len++)
         if (buf[lastChar] == '\n')
             break;
-    int pos = 0;
     char * resultBuf = new char [len +1];
     if (lastChar >= bufIndex[0])
         memcpy(resultBuf, &buf[bufIndex[0]], len);

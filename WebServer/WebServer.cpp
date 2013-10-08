@@ -20,7 +20,7 @@ std::string WebServer::getWebmaster() const
     return webMaster;
 }
 
-WebServer * const WebServer::setWebmaster(const std::string & newMail)
+WebServer * WebServer::setWebmaster(const std::string & newMail)
 {
     webMaster = newMail;
     return this;
