@@ -1,3 +1,7 @@
+# compiled items
+*.exe
+test/test
+
 # Compiled Object files
 *.slo
 *.lo
