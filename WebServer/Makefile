@@ -15,9 +15,11 @@ OBJ=	$(SRC:.cpp=.o)
 
 CXX=	g++ -W -Wall -Wextra -ansi -pedantic -std=c++11
 
-all:	$(NAME) $(OBJ)
+$(NAME):	$(OBJ)
 	ar rc $(NAME) $(OBJ)
 	ranlib $(NAME)
+
+all:	$(NAME)
 
 clean:
 	$(RM) $(NAME) $(OBJ)
