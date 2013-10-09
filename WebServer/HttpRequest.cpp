@@ -28,6 +28,8 @@ HttpRequest::~HttpRequest()
 
 HttpRequest *HttpRequest::addParam(const std::string & key, const std::string & value)
 {
+	if (key == "Cookie")
+		evalCookies(value);
     paramList.insert(paramList.end(), std::pair<std::string, const std::string>(epur_begin_str(key.c_str()), epur_begin_str(value.c_str())));
     return this;
 }
@@ -60,6 +62,7 @@ bool HttpRequest::isValid() const
 
 void HttpRequest::debug() const
 {
+	cookieMng.debug();
     std::cout << "REQUEST: " << request.first << std::endl;
     for (auto i = paramList.cbegin(); i != paramList.cend(); i++)
         std::cout << (*i).first << " => " << (*i).second << std::endl;
@@ -85,3 +88,21 @@ const std::string HttpRequest::getHttpVersion() const
 {
     return httpVersion;
 }
+
+void HttpRequest::evalCookies(const std::string &cookieString)
+{
+	std::list<std::string> cookies = string_split(cookieString, ';');
+	for (auto i = cookies.cbegin(); i != cookies.cend(); i++)
+	{
+		size_t pos = (*i).find('=');
+		std::string key = (*i).substr(1, pos -1);
+		std::string value = (*i).substr(pos +1);
+		cookieMng.setValue(key, value);
+	}
+}
+
+CookieManager *HttpRequest::getCookies()
+{
+	return &cookieMng;
+}
+

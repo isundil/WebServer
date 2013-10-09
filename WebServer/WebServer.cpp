@@ -65,7 +65,7 @@ void WebServer::start()
 void WebServer::newClient(HttpClient *client)
 {
     while (client->readNextParam());
-    std::cout << "{" << client->getRequest()->getRequestUrl() << "}" << std::endl;
+    client->getRequest()->debug();
     execRequest(client);
 }
 
@@ -81,3 +81,4 @@ void WebServer::execRequest(HttpClient *client)
         }
     throw Error404();
 }
+

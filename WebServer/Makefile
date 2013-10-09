@@ -9,11 +9,12 @@ SRC=	HtmlRootElement.cpp		\
 		SessionManager.cpp		\
 		SocketException.cpp		\
 		WebServer.cpp			\
-		Socket.cpp
+		Socket.cpp				\
+		Cookie.cpp
 
 OBJ=	$(SRC:.cpp=.o)
 
-CXX=	g++ -W -Wall -Wextra -ansi -pedantic -std=c++11
+CXX=	g++ -W -Wall -Wextra -ansi -pedantic -std=c++11 -g3
 
 $(NAME):	$(OBJ)
 	ar rc $(NAME) $(OBJ)

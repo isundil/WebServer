@@ -2,6 +2,7 @@
 
 #include <list>
 #include <string>
+#include "Cookie.h"
 
 class InvalidRequestException : public std::exception
 {
@@ -41,12 +42,18 @@ public: //public methods
     const std::string getRequestParam() const;
     const std::string getRequestUrl() const;
     const std::string getHttpVersion() const;
+	CookieManager * getCookies();
 
     void debug() const;
+
+private: //privates method
+
+	void evalCookies(const std::string &);
 
 private: //private attributes
     std::list<std::pair<const std::string, const std::string> > paramList;
     std::pair<enum reqtype, std::string> request;
     std::string requestUrl;
     std::string httpVersion;
+	CookieManager cookieMng;
 };
