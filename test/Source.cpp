@@ -1,18 +1,23 @@
 #include <iostream>
+#include <time.h> //init rand()
 #include "../WebServer/WebServer.hpp"
 #include "../WebServer/AWebPage.h"
 #include "../WebServer/HttpClient.h"
 #include "../WebServer/HttpRequest.h"
 #include "../WebServer/SocketException.h"
-#include "../WebServer/SessionManager.h"
+#include "../WebServer/Session.h"
 
 class IndexPage : public AWebPage
 {
     void requestGet(HttpClient *client)
     {
-        client->debugResponse = ("<!DOCTYPE html><html><body><h1>test</h1><p>test blablabla</p></body></html>\n");
 		client->getRequest()->getCookies()->setValue("bbec", 42)->setValue("a", 43)->setValue("test_string", "coucou les gens");
 		Session * sess = client->getOrCreateSession();
+
+        char  * sessions[5] = { "Annie", "Arielle", "Anna", "Camille", "Loutre" };
+        if (sess->getValue() == "")
+            sess->setValue(sessions[rand() % 5]);
+        client->debugResponse = ("<!DOCTYPE html><html><body><h1>test</h1><p>test " +sess->getValue() +"</p></body></html>\n");
     }
 
     const std::string getRequestUrl()
@@ -23,6 +28,7 @@ class IndexPage : public AWebPage
 
 int main(int ac, char **av)
 {
+    srand(time(NULL));
 	(void)ac; (void)av;
 	WebServer *ws;
 	try {

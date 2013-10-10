@@ -35,6 +35,7 @@ public: //public nested
         std::string readLine();
         void write(const std::string &);
         void writeLine(const std::string &);
+        unsigned short getPort() const;
 
     private:
         void * socket;

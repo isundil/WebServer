@@ -11,6 +11,7 @@ HttpClient::HttpClient(WebServer::ClientSocket *s) : socket(s)
     addHeader("Cache - Control", "no-cache")->addHeader("Pragma", "no-cache")->addHeader("Content-Type", "text/html; charset=utf-8");
     addHeader("X-Cnection", "close");
     responseCode = 200;
+    session = NULL;
 }
 
 HttpClient::~HttpClient()
@@ -164,4 +165,3 @@ Session * HttpClient::getOrCreateSession()
 	session = SessionManager::createNewSession(hash);
 	return session;
 }
-

@@ -26,7 +26,9 @@ Session * SessionManager::getSession(const std::string & hash)
 
 Session * SessionManager::createNewSession(const std::string & hash)
 {
-	return SessionManager::getInstance()->sessions[hash];
+    Session *newSession = new Session();
+    SessionManager::getInstance()->sessions[hash] = newSession;
+	return newSession;
 }
 
 SessionManager *SessionManager::instance = NULL;

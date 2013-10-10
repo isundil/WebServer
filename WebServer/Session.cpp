@@ -3,4 +3,5 @@
 
 Session::Session()
 {
+    value = "";
 }

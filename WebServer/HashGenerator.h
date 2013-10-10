@@ -7,8 +7,8 @@ class HttpClient;
 class HashGenerator
 {
 public:
-	static const char * generateHash(const HttpClient &request);
+	static const std::string generateHash(const HttpClient &request);
 
 private:
-	static const char * doGenerateHash(const time_t timestamp, const short port);
+	static void doGenerateHash(const time_t timestamp, const short port, char result[256]);
 };

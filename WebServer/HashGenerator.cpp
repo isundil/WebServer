@@ -2,16 +2,19 @@
 #include "HttpClient.h"
 #include "HashGenerator.h"
 
-
-const char * HashGenerator::generateHash(const HttpClient &client)
+const std::string HashGenerator::generateHash(const HttpClient &client)
 {
-	return HashGenerator::doGenerateHash(time(NULL), 0);
+    char * hash = new char[256];
+    doGenerateHash(time(NULL), client.getConstSocket()->getPort(), hash);
+    std::string result = std::string(hash);
+    delete [] hash;
+	return result;
 }
 
-const char * HashGenerator::doGenerateHash(const time_t timestamp, const short port)
+void HashGenerator::doGenerateHash(const time_t timestamp, const short port, char result[256])
 {
 	std::stringstream ss;
-	ss << timestamp << ":" << port << ":" << rand() % 1000;
-	const char * input = ss.str().c_str();
-	return input;
+    int rd = rand() % 1000;
+	ss << timestamp << ":" << port << ":" << rd;
+    strncpy(result, ss.str().c_str(), 256);
 }
