@@ -41,8 +41,10 @@ public:
 	}
 
 	template <class E>
-	CookieManager *setValue(const std::string &name, E value)
+	CookieManager *setValue(const std::string &_name, E value)
 	{
+		std::string name(_name);
+		prepareName(name);
 		isWritting = true;
 		std::stringstream ss;
 		ss << value;
@@ -50,13 +52,36 @@ public:
 		return this;
 	}
 
+	void setInitValue(const std::string &key, const std::string &value);
+
 	std::string getString() const;
 	void debug() const;
 
 	bool hasNew() const;
 
 private:
+	void prepareName(std::string &);
+
+private:
 	std::map<std::string, std::pair<std::string, bool> > cookies;
 	bool isWritting;
 };
 
+class InvalidNameException: public std::exception
+{
+public:
+	InvalidNameException(const std::string &name): _name(name)
+	{
+	}
+	virtual ~InvalidNameException()
+	{
+	}
+
+	const char * what() const throw ()
+	{
+		return std::string("Invalid name: "+_name).c_str();
+	}
+
+private:
+	const std::string &_name;
+};

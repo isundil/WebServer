@@ -1,8 +1,9 @@
-﻿La génération a démarré 07/10/2013 13:14:57.
-     1>Projet "D:\Project\WebServer\test\test.vcxproj" sur le nœud 2 (Clean cible(s)).
-     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\v120\Microsoft.CppClean.targets(76,5): warning : The process cannot access the file 'C:\PROGRAM FILES (X86)\STEAM\GAMEOVERLAYRENDERER.LOG' because it is being used by another process.
-     1>Génération du projet "D:\Project\WebServer\test\test.vcxproj" terminée (Clean cible(s)).
+﻿Build started 10/10/2013 11:14:51 AM.
+     1>Project "C:\Users\201310009\Desktop\WebServer-master\test\test.vcxproj" on node 3 (build target(s)).
+       Project file contains ToolsVersion="12.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="4.0".
+     1>C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\Platforms\Win32\Microsoft.Cpp.Win32.Targets(518,5): error MSB8008: Specified platform toolset (v120) is not installed or invalid. Please make sure that a supported PlatformToolset value is selected.
+     1>Done Building Project "C:\Users\201310009\Desktop\WebServer-master\test\test.vcxproj" (build target(s)) -- FAILED.
 
-La génération a réussi.
+Build FAILED.
 
-Temps écoulé 00:00:00.07
+Time Elapsed 00:00:00.00

@@ -43,7 +43,8 @@ WebServer::Socket::Socket(unsigned int port)
         delete sock;
         throw SocketException("socket()", "", WSAGetLastError());
     }
-    service.sin_addr.s_addr = 0;
+    // service.sin_addr.s_addr = 0; => listen on all interfaces
+	service.sin_addr.s_addr = inet_addr("127.0.0.1");
     service.sin_family = AF_INET;
     service.sin_port = htons(port);
     if ((bind(*sock, (const sockaddr *) &service, sizeof(service))) == SOCKET_ERROR)

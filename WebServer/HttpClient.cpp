@@ -90,7 +90,7 @@ void HttpClient::sendResponse()
         ss << (*i).first << ": " << (*i).second << std::endl;
     }
 	if (getRequest()->getCookies()->hasNew())
-		ss << "Set-Cookie: " << getRequest()->getCookies()->getString() << std::endl;
+		ss << getRequest()->getCookies()->getString();
     ss << "Content-Length" << ": " << getRespondSize() << std::endl << std::endl;
     getSocket()->write(ss.str());
     getSocket()->write(debugResponse);
@@ -108,6 +108,11 @@ const WebServer *HttpClient::getServer() const
 }
 
 WebServer::ClientSocket * HttpClient::getSocket() const
+{
+    return socket;
+}
+
+const WebServer::ClientSocket * HttpClient::getConstSocket() const
 {
     return socket;
 }

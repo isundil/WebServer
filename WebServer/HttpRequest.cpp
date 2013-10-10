@@ -97,7 +97,7 @@ void HttpRequest::evalCookies(const std::string &cookieString)
 		size_t pos = (*i).find('=');
 		std::string key = (*i).substr(1, pos -1);
 		std::string value = (*i).substr(pos +1);
-		cookieMng.setValue(key, value);
+		cookieMng.setInitValue(key, value);
 	}
 }
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include "WebServer.hpp"
 
 class HttpRequest;
 
@@ -24,6 +25,7 @@ public:
     bool readNextParam();
 
     std::string debugResponse;
+	const WebServer::ClientSocket * getConstSocket() const;
 
 private:
     WebServer::ClientSocket * getSocket() const;
