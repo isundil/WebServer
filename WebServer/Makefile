@@ -10,6 +10,7 @@ SRC=	HtmlRootElement.cpp		\
 		SocketException.cpp		\
 		WebServer.cpp			\
 		Socket.cpp				\
+		HashGenerator.cpp		\
 		Cookie.cpp
 
 OBJ=	$(SRC:.cpp=.o)

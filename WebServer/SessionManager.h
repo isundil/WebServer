@@ -9,6 +9,8 @@ class SessionManager
 {
 public:
     static SessionManager *getInstance();
+	static Session * getSession(const std::string & hash);
+	static Session * createNewSession(const std::string & hash);
 
 private:
     SessionManager();
@@ -20,4 +22,3 @@ private:
     static SessionManager *instance;
 };
 
-SessionManager *SessionManager::instance = NULL;

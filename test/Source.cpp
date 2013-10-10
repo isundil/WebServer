@@ -4,6 +4,7 @@
 #include "../WebServer/HttpClient.h"
 #include "../WebServer/HttpRequest.h"
 #include "../WebServer/SocketException.h"
+#include "../WebServer/SessionManager.h"
 
 class IndexPage : public AWebPage
 {
@@ -11,6 +12,7 @@ class IndexPage : public AWebPage
     {
         client->debugResponse = ("<!DOCTYPE html><html><body><h1>test</h1><p>test blablabla</p></body></html>\n");
 		client->getRequest()->getCookies()->setValue("bbec", 42)->setValue("a", 43)->setValue("test_string", "coucou les gens");
+		Session * sess = client->getOrCreateSession();
     }
 
     const std::string getRequestUrl()

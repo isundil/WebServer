@@ -11,7 +11,7 @@ const char * HashGenerator::generateHash(const HttpClient &client)
 const char * HashGenerator::doGenerateHash(const time_t timestamp, const short port)
 {
 	std::stringstream ss;
-	ss << timestamp << ":" << port << ":" << rand() % 1000 << std::endl;
+	ss << timestamp << ":" << port << ":" << rand() % 1000;
 	const char * input = ss.str().c_str();
 	return input;
 }

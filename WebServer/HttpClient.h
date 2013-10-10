@@ -4,6 +4,7 @@
 #include "WebServer.hpp"
 
 class HttpRequest;
+class Session;
 
 class HttpClient
 {
@@ -27,6 +28,9 @@ public:
     std::string debugResponse;
 	const WebServer::ClientSocket * getConstSocket() const;
 
+	Session * getSessionOrNull();
+	Session * getOrCreateSession();
+
 private:
     WebServer::ClientSocket * getSocket() const;
     unsigned int getRespondSize();
@@ -37,4 +41,5 @@ private:
     std::map<std::string, std::string> header;
     HttpRequest *req;
     int responseCode;
+	Session * session;
 };

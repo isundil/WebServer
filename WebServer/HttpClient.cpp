@@ -1,7 +1,9 @@
 #include <sstream>
+#include "SessionManager.h"
 #include "WebServer.hpp"
 #include "HttpClient.h"
 #include "HttpRequest.h"
+#include "HashGenerator.h"
 
 HttpClient::HttpClient(WebServer::ClientSocket *s) : socket(s)
 {
@@ -144,3 +146,22 @@ HttpClient * HttpClient::addHeader(const std::string &key, const std::string & v
     header[key] = value;
     return this;
 }
+
+Session * HttpClient::getSessionOrNull()
+{
+	if (session == NULL)
+		session = SessionManager::getSession(getRequest()->getCookies()->getValue("sessid", std::string("")));
+	return session;
+}
+
+Session * HttpClient::getOrCreateSession()
+{
+	Session * sess = getSessionOrNull();
+	if (sess)
+		return sess;
+	const std::string hash = HashGenerator::generateHash(*this);
+	getRequest()->getCookies()->setValue("sessid", hash);
+	session = SessionManager::createNewSession(hash);
+	return session;
+}
+
