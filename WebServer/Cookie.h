@@ -31,6 +31,7 @@ public:
 		}
 		catch (std::exception &e)
 		{
+            (void) e;
 			return defaultValue;
 		}
 		std::stringstream ss;

@@ -76,6 +76,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cookie.cpp" />
+    <ClCompile Include="HashGenerator.cpp" />
     <ClCompile Include="HtmlRootElement.cpp" />
     <ClCompile Include="HttpClient.cpp" />
     <ClCompile Include="HttpRequest.cpp" />
@@ -88,6 +90,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AWebPage.h" />
+    <ClInclude Include="Cookie.h" />
+    <ClInclude Include="HashGenerator.h" />
     <ClInclude Include="HtmlRootElement.h" />
     <ClInclude Include="HttpClient.h" />
     <ClInclude Include="HttpRequest.h" />

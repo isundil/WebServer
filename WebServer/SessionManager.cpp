@@ -19,6 +19,7 @@ Session * SessionManager::getSession(const std::string & hash)
 	}
 	catch (std::exception &e)
 	{
+        (void) e;
 	}
 	return NULL;
 }

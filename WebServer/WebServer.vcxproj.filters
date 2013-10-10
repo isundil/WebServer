@@ -48,6 +48,12 @@
     <ClCompile Include="HtmlRootElement.cpp">
       <Filter>Fichiers sources\html</Filter>
     </ClCompile>
+    <ClCompile Include="Cookie.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="HashGenerator.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WebServer.hpp">
@@ -79,6 +85,12 @@
     </ClInclude>
     <ClInclude Include="HtmlRootElement.h">
       <Filter>Fichiers d%27en-tête\html</Filter>
+    </ClInclude>
+    <ClInclude Include="Cookie.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="HashGenerator.h">
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

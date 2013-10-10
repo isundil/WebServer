@@ -1,9 +1,0 @@
-﻿Build started 10/10/2013 11:14:51 AM.
-     1>Project "C:\Users\201310009\Desktop\WebServer-master\test\test.vcxproj" on node 3 (build target(s)).
-       Project file contains ToolsVersion="12.0", which is not supported by this version of MSBuild. Treating the project as if it had ToolsVersion="4.0".
-     1>C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\Platforms\Win32\Microsoft.Cpp.Win32.Targets(518,5): error MSB8008: Specified platform toolset (v120) is not installed or invalid. Please make sure that a supported PlatformToolset value is selected.
-     1>Done Building Project "C:\Users\201310009\Desktop\WebServer-master\test\test.vcxproj" (build target(s)) -- FAILED.
-
-Build FAILED.
-
-Time Elapsed 00:00:00.00
