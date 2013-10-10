@@ -10,6 +10,7 @@ class IndexPage : public AWebPage
     void requestGet(HttpClient *client)
     {
         client->debugResponse = ("<!DOCTYPE html><html><body><h1>test</h1><p>test blablabla</p></body></html>");
+		client->getRequest()->getCookies()->setValue("a", 42);
     }
 
     const std::string getRequestUrl()

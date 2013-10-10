@@ -1,3 +1,4 @@
+#include <iostream>
 #ifdef _WIN32
 # include <WinSock2.h>
 # include <WS2tcpip.h>
@@ -141,6 +142,7 @@ char WebServer::ClientSocket::readChar()
 
 void WebServer::ClientSocket::write(const std::string &value)
 {
+	std::cout << "OUT:" << value;
     if ((send(*(SOCKET*) socket, value.c_str(), value.length(), 0)) == SOCKET_ERROR)
         throw SocketException("send()", "", WSAGetLastError());
 }

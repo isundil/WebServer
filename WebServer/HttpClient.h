@@ -15,7 +15,7 @@ public:
 
     HttpClient *setServer(WebServer *srv);
     const WebServer *getServer() const;
-    const HttpRequest * getRequest() const;
+    HttpRequest * getRequest() const;
 
     HttpClient * addHeader(const std::string &key, const std::string & value);
     std::string getRespondStringCode(unsigned short code);

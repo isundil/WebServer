@@ -85,14 +85,12 @@ void HttpClient::sendResponse()
 {
     std::stringstream ss;
     ss << getRequest()->getHttpVersion() << " " << responseCode << " " << getRespondStringCode(responseCode) << std::endl;
-    getSocket()->write(ss.str());
     for (auto i = header.cbegin(); i != header.cend(); i++)
     {
-        ss.str("");
         ss << (*i).first << ": " << (*i).second << std::endl;
-        getSocket()->write(ss.str());
     }
-    ss.str("");
+	if (getRequest()->getCookies()->hasNew())
+		ss << "Set-Cookie: " << getRequest()->getCookies()->getString() << std::endl;
     ss << "Content-Length" << ": " << getRespondSize() << std::endl << std::endl;
     getSocket()->write(ss.str());
     getSocket()->write(debugResponse);
@@ -131,7 +129,7 @@ void HttpClient::debug() const
     this->req->debug();
 }
 
-const HttpRequest * HttpClient::getRequest() const
+HttpRequest * HttpClient::getRequest() const
 {
     return this->req;
 }
