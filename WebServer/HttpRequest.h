@@ -47,7 +47,6 @@ public: //public methods
     void debug() const;
 
 private: //privates method
-
 	void evalCookies(const std::string &);
 
 private: //private attributes

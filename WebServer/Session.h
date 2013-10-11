@@ -17,8 +17,11 @@ public:
     {
         return value;
     }
+    void setDefaultExpire(const time_t &expire);
+    time_t getDefaultExpire() const;
 
 private:
     std::map<const std::string, std::string> values;
     std::string value;
+    time_t expire;
 };

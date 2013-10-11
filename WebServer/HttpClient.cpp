@@ -4,6 +4,7 @@
 #include "HttpClient.h"
 #include "HttpRequest.h"
 #include "HashGenerator.h"
+#include "Session.h"
 
 HttpClient::HttpClient(WebServer::ClientSocket *s) : socket(s)
 {
@@ -84,8 +85,14 @@ bool HttpClient::readNextParam()
     return this->addParam(line);
 }
 
+void HttpClient::updateSession()
+{
+    getRequest()->getCookies()->updateExpire("sessid", time(NULL) + session->getDefaultExpire());
+}
+
 void HttpClient::sendResponse()
 {
+    updateSession();
     std::stringstream ss;
     ss << getRequest()->getHttpVersion() << " " << responseCode << " " << getRespondStringCode(responseCode) << std::endl;
     for (auto i = header.cbegin(); i != header.cend(); i++)

@@ -34,6 +34,7 @@ public:
 private:
     WebServer::ClientSocket * getSocket() const;
     unsigned int getRespondSize();
+    void updateSession();
 
 private:
     WebServer::ClientSocket * const socket;

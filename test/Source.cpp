@@ -11,7 +11,8 @@ class IndexPage : public AWebPage
 {
     void requestGet(HttpClient *client)
     {
-		client->getRequest()->getCookies()->setValue("bbec", 42)->setValue("a", 43)->setValue("test_string", "coucou les gens");
+		client->getRequest()->getCookies()->setValue("a", 42)->setValue("test_string", "coucou les gens");
+        client->getRequest()->getCookies()->destroy("bbec");
 		Session * sess = client->getOrCreateSession();
 
         char  * sessions[5] = { "Annie", "Arielle", "Anna", "Camille", "Loutre" };
@@ -28,7 +29,7 @@ class IndexPage : public AWebPage
 
 int main(int ac, char **av)
 {
-    srand(time(NULL));
+    srand((int)time(NULL));
 	(void)ac; (void)av;
 	WebServer *ws;
 	try {

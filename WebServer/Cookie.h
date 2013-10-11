@@ -6,6 +6,25 @@
 
 class CookieManager
 {
+private: //private nested
+    class Data
+    {
+    public:
+        Data(const std::string & value, bool isNew, time_t expire);
+        ~Data();
+
+        time_t getExpire() const;
+        void setExpire(const time_t &value);
+        std::string getValue() const;
+        void setValue(const std::string &);
+        bool isModified() const;
+
+    private: //private attributes
+        std::string value;
+        bool isWritten;
+        time_t expire;
+    };
+
 public:
 	CookieManager();
 	~CookieManager();
@@ -24,10 +43,10 @@ public:
 	template <class E>
 	E getValue(const std::string &name, E defaultValue)
 	{
-		std::pair<std::string, bool> value;
+		std::string value;
 		try
 		{
-			value = cookies.at(name);
+			value = cookies.at(name)->getValue();
 		}
 		catch (std::exception &e)
 		{
@@ -35,37 +54,50 @@ public:
 			return defaultValue;
 		}
 		std::stringstream ss;
-		ss.str(value.first);
+		ss.str(value);
 		E result;
 		ss >> result;
 		return result;
 	}
 
-	template <class E>
-	CookieManager *setValue(const std::string &_name, E value)
-	{
-		std::string name(_name);
-		prepareName(name);
-		isWritting = true;
-		std::stringstream ss;
-		ss << value;
-		cookies[name] = std::pair<std::string, bool> (ss.str(), true);
-		return this;
-	}
+    template <class E>
+    CookieManager *setValue(const std::string &_name, E value)
+    {
+        return this->setValue(_name, value, time(NULL) + defaultExpire);
+    }
+
+    template <class E>
+    CookieManager *setValue(const std::string &_name, E value, time_t expire)
+    {
+        std::string name(_name);
+        prepareName(name);
+        isWritting = true;
+        std::stringstream ss;
+        ss << value;
+        if (!cookie_exists(name))
+            cookies[name] = new Data(ss.str(), true, time(NULL) + defaultExpire);
+        else
+            cookies[name]->setValue(ss.str());
+        return this;
+    }
 
 	void setInitValue(const std::string &key, const std::string &value);
 
 	std::string getString() const;
 	void debug() const;
-
+    void destroy(const std::string & name);
+    bool cookie_exists(const std::string & name) const;
 	bool hasNew() const;
+    void setDefaultExpireTime(time_t time);
+    void updateExpire(const std::string &name, const time_t &expire);
 
-private:
+private: //private methods
 	void prepareName(std::string &);
 
-private:
-	std::map<std::string, std::pair<std::string, bool> > cookies;
+private: //private attributes
+	std::map<std::string, Data *> cookies;
 	bool isWritting;
+    time_t defaultExpire;
 };
 
 class InvalidNameException: public std::exception
