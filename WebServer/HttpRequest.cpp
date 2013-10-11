@@ -40,11 +40,6 @@ HttpRequest *HttpRequest::setRequest(const std::string & request)
     std::string first = request.substr(0, pos);
     this->request = std::pair<enum reqtype, std::string>(getEnum(first), request.substr(pos +1));
     std::list<std::string> requestFields = string_split(this->request.second, ' ');
-    if (requestFields.size() != 2)
-    {
-        this->request.first = HttpRequest::reqtype::invalid;
-        return this;
-    }
     for (auto i = requestFields.cbegin(); i != requestFields.cend(); i++)
     {
         if (i == requestFields.cbegin())

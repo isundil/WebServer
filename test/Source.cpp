@@ -15,9 +15,9 @@ class IndexPage : public AWebPage
         client->getRequest()->getCookies()->destroy("bbec");
 		Session * sess = client->getOrCreateSession();
 
-        char  * sessions[5] = { "Annie", "Arielle", "Anna", "Camille", "Loutre" };
+        char  * sessions[8] = { "Annie", "Arielle", "Anna", "Camille", "Carolie", "Caroline", "Cyntia", "Cyndie" };
         if (sess->getValue() == "")
-            sess->setValue(sessions[rand() % 5]);
+            sess->setValue(sessions[rand() % 8]);
         client->debugResponse = ("<!DOCTYPE html><html><body><h1>test</h1><p>test " +sess->getValue() +"</p></body></html>\n");
     }
 

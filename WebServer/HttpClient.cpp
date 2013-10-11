@@ -87,7 +87,8 @@ bool HttpClient::readNextParam()
 
 void HttpClient::updateSession()
 {
-    getRequest()->getCookies()->updateExpire("sessid", time(NULL) + session->getDefaultExpire());
+    if (session)
+        getRequest()->getCookies()->updateExpire("sessid", time(NULL) + session->getDefaultExpire());
 }
 
 void HttpClient::sendResponse()
