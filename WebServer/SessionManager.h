@@ -11,6 +11,7 @@ public:
     static SessionManager *getInstance();
 	static Session * getSession(const std::string & hash);
 	static Session * createNewSession(const std::string & hash);
+    static void destroy(const std::string & hash);
 
 private:
     SessionManager();

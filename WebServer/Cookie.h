@@ -32,7 +32,7 @@ public:
 	template <class E>
 	E getValue(const std::string &name)
 	{
-		std::string value = cookies[name].first;
+		std::string value = cookies[name]->getValue();
 		std::stringstream ss;
 		ss.str(value);
 		E result;

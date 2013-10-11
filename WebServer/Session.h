@@ -9,19 +9,55 @@ public:
     Session();
     ~Session();
 
-    void setValue(const std::string &v)
+    template <class E>
+    E getValue(const std::string &name)
     {
-        value = v;
+        std::string value = values.at(name);
+        std::stringstream ss;
+        ss.str(value);
+        E result;
+        ss >> result;
+        return result;
     }
-    std::string getValue() const
+
+    template <class E>
+    E getValue(const std::string &name, E defaultValue)
     {
-        return value;
+        std::string value;
+        try
+        {
+            value = values.at(name);
+        }
+        catch (std::exception &e)
+        {
+            (void) e;
+            return defaultValue;
+        }
+        std::stringstream ss;
+        ss.str(value);
+        E result;
+        ss >> result;
+        return result;
+    }
+
+    template <class E>
+    Session *setValue(const std::string &name, E value)
+    {
+        std::stringstream ss;
+        ss << value;
+        if (!value_exists(name))
+            values[name] = ss.str();
+        else
+            values[name] = ss.str();
+        return this;
     }
     void setDefaultExpire(const time_t &expire);
     time_t getDefaultExpire() const;
+    bool value_exists(const std::string &name) const;
+    void destroy(const std::string &name);
+    void clear();
 
 private:
     std::map<const std::string, std::string> values;
-    std::string value;
     time_t expire;
 };

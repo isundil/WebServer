@@ -28,13 +28,14 @@ public:
     std::string debugResponse;
 	const WebServer::ClientSocket * getConstSocket() const;
 
-	Session * getSessionOrNull();
-	Session * getOrCreateSession();
+	Session * sessionGetOrNull();
+    Session * sessionGetOrCreate();
+    void sessionDestroy();
 
 private:
     WebServer::ClientSocket * getSocket() const;
     unsigned int getRespondSize();
-    void updateSession();
+    void sessionUpdate();
 
 private:
     WebServer::ClientSocket * const socket;

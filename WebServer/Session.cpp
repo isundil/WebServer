@@ -3,8 +3,12 @@
 
 Session::Session()
 {
-    value = "";
     expire = 60 * 60 * 1; //default expire: 1 hour
+}
+
+Session::~Session()
+{
+    this->clear();
 }
 
 time_t Session::getDefaultExpire() const
@@ -15,4 +19,19 @@ time_t Session::getDefaultExpire() const
 void Session::setDefaultExpire(const time_t & value)
 {
     expire = value;
+}
+
+bool Session::value_exists(const std::string &name) const
+{
+    return values.find(name) == values.cend();
+}
+
+void Session::destroy(const std::string &name)
+{
+    values.erase(values.find(name));
+}
+
+void Session::clear()
+{
+    values.clear();
 }

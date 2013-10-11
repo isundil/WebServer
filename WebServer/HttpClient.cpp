@@ -85,7 +85,7 @@ bool HttpClient::readNextParam()
     return this->addParam(line);
 }
 
-void HttpClient::updateSession()
+void HttpClient::sessionUpdate()
 {
     if (session)
         getRequest()->getCookies()->updateExpire("sessid", time(NULL) + session->getDefaultExpire());
@@ -93,7 +93,7 @@ void HttpClient::updateSession()
 
 void HttpClient::sendResponse()
 {
-    updateSession();
+    sessionUpdate();
     std::stringstream ss;
     ss << getRequest()->getHttpVersion() << " " << responseCode << " " << getRespondStringCode(responseCode) << std::endl;
     for (auto i = header.cbegin(); i != header.cend(); i++)
@@ -156,20 +156,27 @@ HttpClient * HttpClient::addHeader(const std::string &key, const std::string & v
     return this;
 }
 
-Session * HttpClient::getSessionOrNull()
+Session * HttpClient::sessionGetOrNull()
 {
 	if (session == NULL)
 		session = SessionManager::getSession(getRequest()->getCookies()->getValue("sessid", std::string("")));
 	return session;
 }
 
-Session * HttpClient::getOrCreateSession()
+Session * HttpClient::sessionGetOrCreate()
 {
-	Session * sess = getSessionOrNull();
+	Session * sess = sessionGetOrNull();
 	if (sess)
 		return sess;
 	const std::string hash = HashGenerator::generateHash(*this);
 	getRequest()->getCookies()->setValue("sessid", hash);
 	session = SessionManager::createNewSession(hash);
 	return session;
+}
+
+void HttpClient::sessionDestroy()
+{
+    SessionManager::destroy(getRequest()->getCookies()->getValue<std::string>("sessid", ""));
+    getRequest()->getCookies()->destroy("sessid");
+    session = NULL;
 }

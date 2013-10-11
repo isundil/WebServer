@@ -31,5 +31,9 @@ Session * SessionManager::createNewSession(const std::string & hash)
 	return newSession;
 }
 
-SessionManager *SessionManager::instance = NULL;
+void SessionManager::destroy(const std::string & hash)
+{
+    SessionManager::getInstance()->sessions.erase(SessionManager::getInstance()->sessions.find(hash));
+}
 
+SessionManager *SessionManager::instance = NULL;
