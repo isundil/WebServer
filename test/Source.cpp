@@ -21,8 +21,8 @@ class IndexPage : public AWebPage
         if (sess->getValue<std::string>("Name", "") == "")
             sess->setValue<std::string>("Name", sessions[rand() % 8]);
         client->debugResponse = ("<!DOCTYPE html><html><body><h1>test</h1><p>test " +sess->getValue<std::string>("Name") +"</p></body></html>\n");
-        if (!s)
-            client->sessionDestroy();
+        //if (!s)
+        //    client->sessionDestroy();
     }
 
     const std::string getRequestUrl()

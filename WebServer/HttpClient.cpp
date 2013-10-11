@@ -88,7 +88,10 @@ bool HttpClient::readNextParam()
 void HttpClient::sessionUpdate()
 {
     if (session)
+    {
         getRequest()->getCookies()->updateExpire("sessid", time(NULL) + session->getDefaultExpire());
+        session->updateTime();
+    }
 }
 
 void HttpClient::sendResponse()
@@ -158,8 +161,11 @@ HttpClient * HttpClient::addHeader(const std::string &key, const std::string & v
 
 Session * HttpClient::sessionGetOrNull()
 {
-	if (session == NULL)
-		session = SessionManager::getSession(getRequest()->getCookies()->getValue("sessid", std::string("")));
+    if (session == NULL)
+    {
+        SessionManager::refresh();
+        session = SessionManager::getSession(getRequest()->getCookies()->getValue("sessid", std::string("")));
+    }
 	return session;
 }
 

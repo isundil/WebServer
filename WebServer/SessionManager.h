@@ -12,6 +12,7 @@ public:
 	static Session * getSession(const std::string & hash);
 	static Session * createNewSession(const std::string & hash);
     static void destroy(const std::string & hash);
+    static void refresh();
 
 private:
     SessionManager();

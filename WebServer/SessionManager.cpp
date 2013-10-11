@@ -1,3 +1,4 @@
+#include <time.h>
 #include "SessionManager.h"
 #include "Session.h"
 
@@ -34,6 +35,23 @@ Session * SessionManager::createNewSession(const std::string & hash)
 void SessionManager::destroy(const std::string & hash)
 {
     SessionManager::getInstance()->sessions.erase(SessionManager::getInstance()->sessions.find(hash));
+}
+
+void SessionManager::refresh()
+{
+    auto i = SessionManager::getInstance()->sessions.begin();
+    time_t now = time(NULL);
+
+    while (i != SessionManager::getInstance()->sessions.end())
+    {
+        if ((*i).second->getExpire() < now)
+        {
+            SessionManager::destroy((*i).first);
+            return SessionManager::refresh();
+        }
+        i++;
+    }
+    return;
 }
 
 SessionManager *SessionManager::instance = NULL;

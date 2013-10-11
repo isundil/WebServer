@@ -1,4 +1,4 @@
-
+#include <time.h>
 #include "Session.h"
 
 Session::Session()
@@ -34,4 +34,14 @@ void Session::destroy(const std::string &name)
 void Session::clear()
 {
     values.clear();
+}
+
+void Session::updateTime()
+{
+    this->destroyAt = time(NULL) + this->expire;
+}
+
+time_t Session::getExpire() const
+{
+    return destroyAt;
 }

@@ -56,8 +56,11 @@ public:
     bool value_exists(const std::string &name) const;
     void destroy(const std::string &name);
     void clear();
+    void updateTime();
+    time_t getExpire() const;
 
 private:
     std::map<const std::string, std::string> values;
     time_t expire;
+    time_t destroyAt;
 };
