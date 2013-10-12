@@ -4,6 +4,7 @@
 #include "WebServer.hpp"
 
 class HttpRequest;
+class Response;
 class Session;
 
 class HttpClient
@@ -25,12 +26,13 @@ public:
     int respondCode(int respondCode = -1);
     bool readNextParam();
 
-    std::string debugResponse;
 	const WebServer::ClientSocket * getConstSocket() const;
 
 	Session * sessionGetOrNull();
     Session * sessionGetOrCreate();
     void sessionDestroy();
+    Response * responseGet();
+    const Response * responseGetConst() const;
 
 private:
     WebServer::ClientSocket * getSocket() const;
@@ -44,4 +46,5 @@ private:
     HttpRequest *req;
     int responseCode;
 	Session * session;
+    Response *response;
 };

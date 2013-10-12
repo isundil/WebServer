@@ -54,6 +54,12 @@
     <ClCompile Include="HashGenerator.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Response.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="RawRootElem.cpp">
+      <Filter>Fichiers sources\html</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WebServer.hpp">
@@ -91,6 +97,15 @@
     </ClInclude>
     <ClInclude Include="HashGenerator.h">
       <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Response.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="ARootElement.h">
+      <Filter>Fichiers d%27en-tête\html</Filter>
+    </ClInclude>
+    <ClInclude Include="RawRootElement.h">
+      <Filter>Fichiers d%27en-tête\html</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

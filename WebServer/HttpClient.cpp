@@ -5,6 +5,7 @@
 #include "HttpRequest.h"
 #include "HashGenerator.h"
 #include "Session.h"
+#include "Response.h"
 
 HttpClient::HttpClient(WebServer::ClientSocket *s) : socket(s)
 {
@@ -13,6 +14,7 @@ HttpClient::HttpClient(WebServer::ClientSocket *s) : socket(s)
     addHeader("X-Cnection", "close");
     responseCode = 200;
     session = NULL;
+    response = new Response();
 }
 
 HttpClient::~HttpClient()
@@ -69,7 +71,7 @@ std::string HttpClient::getRespondStringCode(unsigned short code)
 
 unsigned int HttpClient::getRespondSize()
 {
-    return debugResponse.length();
+    return response->length();
 }
 
 int HttpClient::respondCode(int code)
@@ -107,7 +109,7 @@ void HttpClient::sendResponse()
 		ss << getRequest()->getCookies()->getString();
     ss << "Content-Length" << ": " << getRespondSize() << std::endl << std::endl;
     getSocket()->write(ss.str());
-    getSocket()->write(debugResponse);
+    getSocket()->write(response->getValue());
 }
 
 HttpClient * HttpClient::setServer(WebServer *srv)
@@ -185,4 +187,14 @@ void HttpClient::sessionDestroy()
     SessionManager::destroy(getRequest()->getCookies()->getValue<std::string>("sessid", ""));
     getRequest()->getCookies()->destroy("sessid");
     session = NULL;
+}
+
+Response * HttpClient::responseGet()
+{
+    return response;
+}
+
+const Response * HttpClient::responseGetConst() const
+{
+    return response;
 }

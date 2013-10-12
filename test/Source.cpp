@@ -7,6 +7,8 @@
 #include "../WebServer/HttpRequest.h"
 #include "../WebServer/SocketException.h"
 #include "../WebServer/Session.h"
+#include "../WebServer/Response.h"
+#include "../WebServer/RawRootElement.h"
 
 class SessionData
 {
@@ -30,11 +32,12 @@ class IndexPage : public AWebPage
         client->getRequest()->getCookies()->destroy("bbec");
         bool s = client->sessionGetOrNull() == NULL;
 		Session * sess = client->sessionGetOrCreate();
+        Response * re = client->responseGet();
 
         char  * sessions[8] = { "Annie", "Arielle", "Anna", "Camille", "Coralie", "Caroline", "Cyntia", "Cyndie" };
         if (sess->storage() == NULL)
             sess->storage(new SessionData(sessions[rand() % 8]));
-        client->debugResponse = ("<!DOCTYPE html><html><body><h1>test</h1><p>test " +((SessionData *)sess->storage())->getValue() +"</p></body></html>\n");
+        re->setElement(new RawRootElement("<!DOCTYPE html><html><body><h1>test</h1><p>test " +((SessionData *)sess->storage())->getValue() +"</p></body></html>\n"));
         if (!s)
             client->sessionDestroy();
     }
