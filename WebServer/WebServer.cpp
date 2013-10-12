@@ -45,11 +45,11 @@ void WebServer::start()
             else if (dynamic_cast<Error404 *>(ptr) != NULL)
                 client->respondCode(404);
         }
-        catch (std::exception &e)
+        /*catch (std::exception &e)
         {
             (void) e;
             client->respondCode(500);
-        }
+        }*/
         try {
             client->sendResponse();
         }

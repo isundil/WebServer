@@ -58,9 +58,11 @@ public:
     void clear();
     void updateTime();
     time_t getExpire() const;
+    void * storage(void * storage = NULL);
 
 private:
     std::map<const std::string, std::string> values;
     time_t expire;
     time_t destroyAt;
+    void * _storage;
 };

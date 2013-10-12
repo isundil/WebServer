@@ -4,11 +4,13 @@
 Session::Session()
 {
     expire = 60 * 60 * 1; //default expire: 1 hour
+    _storage = NULL;
 }
 
 Session::~Session()
 {
     this->clear();
+    delete _storage;
 }
 
 time_t Session::getDefaultExpire() const
@@ -44,4 +46,11 @@ void Session::updateTime()
 time_t Session::getExpire() const
 {
     return destroyAt;
+}
+
+void * Session::storage(void *data)
+{
+    if (data)
+        _storage = data;
+    return _storage;
 }

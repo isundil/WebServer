@@ -8,6 +8,20 @@
 #include "../WebServer/SocketException.h"
 #include "../WebServer/Session.h"
 
+class SessionData
+{
+public:
+    SessionData(const std::string & val) : data(val) {};
+    ~SessionData() {};
+    const std::string getValue() const
+    {
+        return data;
+    }
+
+private:
+    const std::string data;
+};
+
 class IndexPage : public AWebPage
 {
     void requestGet(HttpClient *client)
@@ -18,11 +32,11 @@ class IndexPage : public AWebPage
 		Session * sess = client->sessionGetOrCreate();
 
         char  * sessions[8] = { "Annie", "Arielle", "Anna", "Camille", "Coralie", "Caroline", "Cyntia", "Cyndie" };
-        if (sess->getValue<std::string>("Name", "") == "")
-            sess->setValue<std::string>("Name", sessions[rand() % 8]);
-        client->debugResponse = ("<!DOCTYPE html><html><body><h1>test</h1><p>test " +sess->getValue<std::string>("Name") +"</p></body></html>\n");
-        //if (!s)
-        //    client->sessionDestroy();
+        if (sess->storage() == NULL)
+            sess->storage(new SessionData(sessions[rand() % 8]));
+        client->debugResponse = ("<!DOCTYPE html><html><body><h1>test</h1><p>test " +((SessionData *)sess->storage())->getValue() +"</p></body></html>\n");
+        if (!s)
+            client->sessionDestroy();
     }
 
     const std::string getRequestUrl()
