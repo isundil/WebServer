@@ -14,6 +14,8 @@ Response::~Response()
 
 Response & Response::setElement(ARootElement * value)
 {
+    if (root)
+        delete root;
     root = value;
     return *this;
 }

@@ -9,12 +9,12 @@ RawRootElement::~RawRootElement()
 {
 }
 
-const std::string RawRootElement::getValue() const
+const std::string RawRootElement::getValue()
 {
     return value.str();
 }
 
-unsigned int RawRootElement::length() const
+unsigned int RawRootElement::length()
 {
     return value.str().length();
 }

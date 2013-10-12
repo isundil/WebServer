@@ -25,3 +25,13 @@ std::string epur_begin_str(const char *str)
         str++;
     return std::string(str);
 }
+
+void replace_all(std::string &in, const std::string &a, const std::string &b)
+{
+    size_t pos = 0;
+    size_t len = b.length();
+    while ((pos = in.find(a, pos +len)) != in.npos)
+    {
+        in.replace(pos, a.length(), b);
+    }
+}

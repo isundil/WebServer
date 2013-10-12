@@ -12,8 +12,8 @@ public:
         value << elem;
     }
     virtual ~RawRootElement();
-    virtual const std::string getValue() const;
-    virtual unsigned int length() const;
+    virtual const std::string getValue();
+    virtual unsigned int length();
 
 private:
     std::stringstream value;

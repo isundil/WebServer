@@ -37,9 +37,12 @@ class IndexPage : public AWebPage
         char  * sessions[8] = { "Annie", "Arielle", "Anna", "Camille", "Coralie", "Caroline", "Cyntia", "Cyndie" };
         if (sess->storage() == NULL)
             sess->storage(new SessionData(sessions[rand() % 8]));
-        re->setElement(new RawRootElement("<!DOCTYPE html><html><body><h1>test</h1><p>test " +((SessionData *)sess->storage())->getValue() +"</p></body></html>\n"));
-        if (!s)
-            client->sessionDestroy();
+        //re->setElement(new RawRootElement("<!DOCTYPE html><html><body><h1>test</h1><p>test " +((SessionData *)sess->storage())->getValue() +"</p></body></html>\n"));
+        html::HtmlRootElement * htmlRoot = new html::HtmlRootElement("What does the fox say ?");
+        re->setElement(htmlRoot);
+        htmlRoot->addScript("test.js").addStyle("test.css").addScript("script2.js");
+        //if (!s)
+        //    client->sessionDestroy();
     }
 
     const std::string getRequestUrl()
