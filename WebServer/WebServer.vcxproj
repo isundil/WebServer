@@ -81,6 +81,7 @@
     <ClCompile Include="HtmlRootElement.cpp" />
     <ClCompile Include="HttpClient.cpp" />
     <ClCompile Include="HttpRequest.cpp" />
+    <ClCompile Include="Meta.cpp" />
     <ClCompile Include="RawRootElem.cpp" />
     <ClCompile Include="Response.cpp" />
     <ClCompile Include="Session.cpp" />
@@ -98,6 +99,7 @@
     <ClInclude Include="HttpClient.h" />
     <ClInclude Include="HttpRequest.h" />
     <ClInclude Include="ARootElement.h" />
+    <ClInclude Include="Meta.h" />
     <ClInclude Include="RawRootElement.h" />
     <ClInclude Include="Response.h" />
     <ClInclude Include="Session.h" />

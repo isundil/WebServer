@@ -3,16 +3,25 @@
 #include <string>
 #include "Cookie.h"
 #include "HtmlRootElement.h"
+#include "Meta.h"
 
 using namespace html;
 
 HtmlRootElement::HtmlRootElement(const std::string & _title) : title(_title)
 {
     upToDate = false;
+    metaElem = new html::Meta();
 }
 
 HtmlRootElement::~HtmlRootElement()
-{}
+{
+    delete metaElem;
+}
+
+Meta & HtmlRootElement::getMeta() const
+{
+    return *(this->metaElem);
+}
 
 void HtmlRootElement::updateResult()
 {
@@ -23,6 +32,7 @@ void HtmlRootElement::updateResult()
         << "<html>" << std::endl
         << "  <head>" << std::endl
         << "    <title>" << this->title << "</title>" << std::endl;
+    metaElem->getString(4, true, ss);
     for (auto i = scriptList.cbegin(); i != scriptList.cend(); i++)
         ss << "    <script type=\"text/javascript\" src=\"" << *i << "\"></script>" << std::endl;
     for (auto i = cssList.cbegin(); i != cssList.cend(); i++)

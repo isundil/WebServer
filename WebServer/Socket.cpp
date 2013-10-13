@@ -143,7 +143,7 @@ char WebServer::ClientSocket::readChar()
 
 void WebServer::ClientSocket::write(const std::string &value)
 {
-	std::cout << "OUT:" << value;
+	//std::cout << "OUT:" << value;
     if ((send(*(SOCKET*) socket, value.c_str(), value.length(), 0)) == SOCKET_ERROR)
         throw SocketException("send()", "", WSAGetLastError());
 }

@@ -6,6 +6,8 @@
 
 namespace html
 {
+    class Meta;
+
     class HtmlRootElement: public ARootElement
     {
     public: //public methods
@@ -14,6 +16,8 @@ namespace html
 
         HtmlRootElement & addScript(const std::string & src);
         HtmlRootElement & addStyle(const std::string & src);
+
+        Meta & getMeta() const;
 
     public: //public inherited methods
         virtual const std::string getValue();
@@ -28,5 +32,6 @@ namespace html
         std::string result;
         std::list<std::string> scriptList;
         std::list<std::string> cssList;
+        Meta * metaElem;
     };
 }

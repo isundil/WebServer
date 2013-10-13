@@ -13,6 +13,7 @@ public:
     Response & setElement(ARootElement *);
     unsigned int length();
     std::string getValue();
+    ARootElement * getElement();
 
 private:
     ARootElement * root;

@@ -42,6 +42,7 @@ public: //public methods
     const std::string getRequestParam() const;
     const std::string getRequestUrl() const;
     const std::string getHttpVersion() const;
+    const std::string getHost() const;
 	CookieManager * getCookies();
 
     void debug() const;

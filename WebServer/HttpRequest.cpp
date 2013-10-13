@@ -63,6 +63,14 @@ void HttpRequest::debug() const
         std::cout << (*i).first << " => " << (*i).second << std::endl;
 }
 
+const std::string HttpRequest::getHost() const
+{
+    for (auto i = paramList.cbegin(); i != paramList.cend(); i++)
+        if ((*i).first == "Host")
+            return (*i).second;
+    return "";
+}
+
 HttpRequest::reqtype HttpRequest::getRequestType() const
 {
     enum reqtype rt = request.first;

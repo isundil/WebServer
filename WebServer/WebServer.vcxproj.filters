@@ -60,6 +60,9 @@
     <ClCompile Include="RawRootElem.cpp">
       <Filter>Fichiers sources\html</Filter>
     </ClCompile>
+    <ClCompile Include="Meta.cpp">
+      <Filter>Fichiers sources\html</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WebServer.hpp">
@@ -105,6 +108,9 @@
       <Filter>Fichiers d%27en-tête\html</Filter>
     </ClInclude>
     <ClInclude Include="RawRootElement.h">
+      <Filter>Fichiers d%27en-tête\html</Filter>
+    </ClInclude>
+    <ClInclude Include="Meta.h">
       <Filter>Fichiers d%27en-tête\html</Filter>
     </ClInclude>
   </ItemGroup>

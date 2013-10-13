@@ -6,6 +6,8 @@
 #include "HashGenerator.h"
 #include "Session.h"
 #include "Response.h"
+#include "HtmlRootElement.h"
+#include "Meta.h"
 
 HttpClient::HttpClient(WebServer::ClientSocket *s) : socket(s)
 {
@@ -99,6 +101,11 @@ void HttpClient::sessionUpdate()
 void HttpClient::sendResponse()
 {
     sessionUpdate();
+    if (dynamic_cast<html::HtmlRootElement *> (response->getElement()) != NULL)
+    {
+        html::Meta & meta = ((html::HtmlRootElement *)response->getElement())->getMeta();
+        meta.setIdentifier("http://" +getRequest()->getHost() +getRequest()->getRequestUrl()); //TODO https ?
+    }
     std::stringstream ss;
     ss << getRequest()->getHttpVersion() << " " << responseCode << " " << getRespondStringCode(responseCode) << std::endl;
     for (auto i = header.cbegin(); i != header.cend(); i++)

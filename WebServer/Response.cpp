@@ -20,6 +20,11 @@ Response & Response::setElement(ARootElement * value)
     return *this;
 }
 
+ARootElement * Response::getElement()
+{
+    return root;
+}
+
 unsigned int Response::length()
 {
     if (!root)
