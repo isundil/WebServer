@@ -81,6 +81,7 @@
     <ClCompile Include="HtmlRootElement.cpp" />
     <ClCompile Include="HttpClient.cpp" />
     <ClCompile Include="HttpRequest.cpp" />
+    <ClCompile Include="MappedDirectory.cpp" />
     <ClCompile Include="Meta.cpp" />
     <ClCompile Include="RawRootElem.cpp" />
     <ClCompile Include="Response.cpp" />

@@ -63,6 +63,9 @@
     <ClCompile Include="Meta.cpp">
       <Filter>Fichiers sources\html</Filter>
     </ClCompile>
+    <ClCompile Include="MappedDirectory.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WebServer.hpp">

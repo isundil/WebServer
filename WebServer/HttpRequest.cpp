@@ -21,6 +21,7 @@ static inline enum HttpRequest::reqtype getEnum(const std::string &input)
 HttpRequest::HttpRequest()
 {
     request = std::pair<enum reqtype, std::string>(reqtype::invalid, "");
+    httpVersion = "HTTP/1.1";
 }
 
 HttpRequest::~HttpRequest()

@@ -41,10 +41,15 @@ public: //public methods
     /*!
     * add a route to the map route
     */
-    template <class T>void registerRoute()
+    template <class T>
+    void registerRoute()
     {
         routes.insert(routes.begin(), new T()); //TODO gestion hosts
     }
+    /*!
+    * Add a real folder to be mapped
+    */
+    void registerDirectory(const std::string & path, const std::string & virtualUrl = "/", bool recursive = true);
 
 public: //public nested
     /*!
@@ -146,6 +151,28 @@ private: //private nested
         void * socket;
     };
 
+    /*!
+    * Contains a mapped directory informations
+    */
+    class MappedDirectory
+    {
+    public:
+        MappedDirectory(const std::string &realPath, const std::string &virtualPath, bool recur);
+        ~MappedDirectory();
+
+        /*!
+        * return the real file path if the url
+        * match the mappedDirectory, or
+        * an empty string if it not
+        */
+        std::string match(const std::string &url);
+
+    private:
+        const std::string realPath;
+        const std::string virtualPath;
+        bool recursive;
+    };
+
 private: //private functions
     /*!
     * Called when a new client show up. It
@@ -161,6 +188,11 @@ private: //private functions
     * 4. Send the response
     */
     void execRequest(HttpClient *client);
+
+    /*
+    * send the file to the client
+    */
+    void sendFile(const std::string & path, HttpClient * client);
 
 private: //private attributes
     /*!
@@ -179,4 +211,8 @@ private: //private attributes
     * list of all the routes available
     */
     std::list<AWebPage *>routes;
+    /*!
+    * list of all the mapped folders
+    */
+    std::list<MappedDirectory *>mappedDirectories;
 };

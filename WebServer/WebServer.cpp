@@ -76,10 +76,22 @@ void WebServer::execRequest(HttpClient *client)
         throw InvalidRequestException();
     for (auto i = routes.begin(); i != routes.end(); i++)
         if (*(*i) == *(client->getRequest()))
+            return (*i)->requestHandler(client->getRequest()->getRequestType(), client); //TODO other requests types
+    if (client->getRequest()->getRequestType() == HttpRequest::reqtype::get)
+        for (auto i = mappedDirectories.cbegin(); i != mappedDirectories.cend(); i++)
         {
-            (*i)->requestGet(client);
-            return;
+            std::string real;
+            if ((real = (*i)->match(client->getRequest()->getRequestUrl())) != "")
+                return sendFile(real, client);
         }
     throw Error404();
 }
 
+void WebServer::sendFile(const std::string & path, HttpClient * cli)
+{
+}
+
+void WebServer::registerDirectory(const std::string & path, const std::string & url, bool recursive)
+{
+    mappedDirectories.push_back(new WebServer::MappedDirectory(path, url, recursive));
+}

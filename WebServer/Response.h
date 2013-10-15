@@ -14,11 +14,7 @@ public:
 
     /*!
     * Set the element to be sent
-    */
-    Response & setElement(ARootElement &);
-
-    /*!
-    * Set the element to be sent
+    * the element given MUST BE allocated using new()
     */
     Response & setElement(ARootElement *);
 

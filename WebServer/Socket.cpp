@@ -25,7 +25,6 @@ typedef int SOCKET;
 
 WebServer::Socket::Socket(unsigned int port)
 {
-    /* TODO: WINDOWS CODE */
 #ifdef _WIN32
     WSAData data;
     int errcode;
@@ -62,7 +61,6 @@ WebServer::Socket::Socket(unsigned int port)
         throw SocketException("listen()", "", WSAGetLastError());
     }
     this->socket = sock;
-    /* END TODO */
 }
 
 WebServer::Socket::~Socket()
@@ -200,6 +198,6 @@ std::string WebServer::ClientSocket::readLine()
         if (resultBuf[i] == '\r')
             resultBuf[i] = 0;
     std::string resultStr = std::string(resultBuf);
-    delete resultBuf;
+    delete [] resultBuf;
     return resultStr;
 }

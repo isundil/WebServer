@@ -45,6 +45,12 @@ class IndexPage : public AWebPage
         //    client->sessionDestroy();
     }
 
+    void requestPost(HttpClient * client)
+    {
+        const std::string result = "BAAAAAAH";
+        client->responseGet()->setElement(new RawRootElement(result));
+    }
+
     const std::string getRequestUrl()
     {
         return "/";

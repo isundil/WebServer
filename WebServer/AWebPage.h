@@ -7,6 +7,8 @@
 
 class HttpClient;
 
+typedef void (AWebPage::*AWebPageRequestHandler)(HttpClient *);
+
 /*!
 * Describe a route. AWebPage MUST be used to register a route
 * You have to override at least ONE OF the requestTYPE method below,
@@ -90,6 +92,24 @@ public: // public route function to override
     virtual const std::string getRequestUrl()
     {
         return "/";
+    }
+
+    /*!
+    * Select the good request type, and call it
+    */
+    void requestHandler(HttpRequest::reqtype type, HttpClient * client)
+    {
+        AWebPageRequestHandler ptrs [9];
+
+        ptrs[HttpRequest::option] = &AWebPage::requestOption;
+        ptrs[HttpRequest::get] = &AWebPage::requestGet;
+        ptrs[HttpRequest::head] = &AWebPage::requestHead;
+        ptrs[HttpRequest::post] = &AWebPage::requestPost;
+        ptrs[HttpRequest::put] = &AWebPage::requestPut;
+        ptrs[HttpRequest::del] = &AWebPage::requestDel;
+        ptrs[HttpRequest::trace] = &AWebPage::requestTrace;
+        ptrs[HttpRequest::connect] = &AWebPage::requestConnect;
+        (this->*ptrs[type])(client);
     }
 
 public:
