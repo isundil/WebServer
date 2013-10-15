@@ -38,8 +38,8 @@ void HtmlRootElement::updateResult()
     for (auto i = cssList.cbegin(); i != cssList.cend(); i++)
         ss << "    <link href=\"" << *i << "\" rel=\"stylesheet\" type=\"text / css\">" << std::endl;
     ss << "  </head>" << std::endl
-        << "  <body>" << std::endl
-        << "  </body>" << std::endl
+        << "  <body>" << std::endl;
+    ss << "  </body>" << std::endl
         << "</html>";
     this->result = ss.str();
     upToDate = true;

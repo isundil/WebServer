@@ -28,8 +28,8 @@ class IndexPage : public AWebPage
 {
     void requestGet(HttpClient *client)
     {
-		client->getRequest()->getCookies()->setValue("a", 42)->setValue("test_string", "coucou les gens");
-        client->getRequest()->getCookies()->destroy("bbec");
+		client->getCookies()->setValue("a", 42)->setValue("test_string", "coucou les gens");
+        client->getCookies()->destroy("bbec");
         bool s = client->sessionGetOrNull() == NULL;
 		Session * sess = client->sessionGetOrCreate();
         Response * re = client->responseGet();
@@ -38,7 +38,7 @@ class IndexPage : public AWebPage
         if (sess->storage() == NULL)
             sess->storage(new SessionData(sessions[rand() % 8]));
         //re->setElement(new RawRootElement("<!DOCTYPE html><html><body><h1>test</h1><p>test " +((SessionData *)sess->storage())->getValue() +"</p></body></html>\n"));
-        html::HtmlRootElement * htmlRoot = new html::HtmlRootElement("What does the fox say ?");
+        html::HtmlRootElement * htmlRoot = new html::HtmlRootElement("Example page");
         re->setElement(htmlRoot);
         htmlRoot->addScript("test.js").addStyle("test.css").addScript("script2.js");
         //if (!s)

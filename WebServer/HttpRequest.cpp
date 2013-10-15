@@ -57,7 +57,6 @@ bool HttpRequest::isValid() const
 
 void HttpRequest::debug() const
 {
-	cookieMng.debug();
     std::cout << "REQUEST: " << request.first << std::endl;
     for (auto i = paramList.cbegin(); i != paramList.cend(); i++)
         std::cout << (*i).first << " => " << (*i).second << std::endl;

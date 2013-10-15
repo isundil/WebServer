@@ -1,7 +1,7 @@
 # compiled items
 *.exe
 test/test
-
+Doc/html
 */Debug
 */Release
 *.log

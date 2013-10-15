@@ -3,18 +3,44 @@
 
 class ARootElement;
 
+/*!
+* The response body string to be sent to the client
+*/
 class Response
 {
 public:
     Response();
     ~Response();
 
+    /*!
+    * Set the element to be sent
+    */
     Response & setElement(ARootElement &);
+
+    /*!
+    * Set the element to be sent
+    */
     Response & setElement(ARootElement *);
+
+    /*!
+    * The response size (in octets)
+    */
     unsigned int length();
+
+    /*!
+    * The response body string to be sent to the client
+    */
     std::string getValue();
+
+    /*!
+    * The response body string, as a RootElement
+    */
     ARootElement * getElement();
 
 private:
+
+    /*!
+    * he response body
+    */
     ARootElement * root;
 };

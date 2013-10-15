@@ -14,12 +14,6 @@ CookieManager::~CookieManager()
         delete ((*i).second);
 }
 
-void CookieManager::debug() const
-{
-    for (auto i = cookies.cbegin(); i != cookies.cend(); i++)
-        std::cout << "{" << (*i).first << "} => {" << (*i).second->getValue() << "}" << std::endl;
-}
-
 std::string CookieManager::getString() const
 {
 	std::stringstream result;

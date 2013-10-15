@@ -119,6 +119,11 @@ void HttpClient::sendResponse()
     getSocket()->write(response->getValue());
 }
 
+CookieManager * HttpClient::getCookies()
+{
+    return this->getRequest()->getCookies();
+}
+
 HttpClient * HttpClient::setServer(WebServer *srv)
 {
     server = srv;
