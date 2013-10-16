@@ -6,6 +6,7 @@
 #include "HtmlRootElement.h"
 
 class HttpClient;
+class AWebPage;
 
 typedef void (AWebPage::*AWebPageRequestHandler)(HttpClient *);
 

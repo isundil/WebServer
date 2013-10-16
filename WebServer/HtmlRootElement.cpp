@@ -28,6 +28,7 @@ void HtmlRootElement::updateResult()
     if (upToDate)
         return;
     std::stringstream ss;
+
     ss  << "<!DOCTYPE html>" << std::endl
         << "<html>" << std::endl
         << "  <head>" << std::endl
@@ -36,11 +37,13 @@ void HtmlRootElement::updateResult()
     for (auto i = scriptList.cbegin(); i != scriptList.cend(); i++)
         ss << "    <script type=\"text/javascript\" src=\"" << *i << "\"></script>" << std::endl;
     for (auto i = cssList.cbegin(); i != cssList.cend(); i++)
-        ss << "    <link href=\"" << *i << "\" rel=\"stylesheet\" type=\"text / css\">" << std::endl;
-    ss << "  </head>" << std::endl
-        << "  <body>" << std::endl;
+        ss << "    <link href=\"" << *i << "\" rel=\"stylesheet\" type=\"text/css\">" << std::endl;
+    ss << "  </head>" << std::endl;
+
+    ss << "  <body>" << std::endl << this->toString();
     ss << "  </body>" << std::endl
         << "</html>";
+
     this->result = ss.str();
     upToDate = true;
 }

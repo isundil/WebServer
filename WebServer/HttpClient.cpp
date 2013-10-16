@@ -23,6 +23,7 @@ HttpClient::~HttpClient()
 {
     delete socket;
     delete req;
+    delete response;
 }
 
 std::string HttpClient::getRespondStringCode(unsigned short code)

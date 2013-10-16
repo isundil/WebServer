@@ -5,6 +5,7 @@
 #include "AWebPage.h"
 #include "HttpError.h"
 #include "Response.h"
+#include "DirContentRootElem.h"
 
 WebServer::WebServer(unsigned int port) : listeningPort(port)
 {
@@ -33,8 +34,9 @@ void WebServer::start()
     {
         HttpClient * client = socket->waitForRequest();
         client->setServer(this);
+        bool haveToSend = true;
         try {
-            newClient(client);
+            haveToSend = newClient(client);
         }
         catch (InvalidRequestException &e) {
             (void) e;
@@ -53,7 +55,8 @@ void WebServer::start()
         //    client->respondCode(500);
         //}
         try {
-            client->sendResponse();
+            if (haveToSend)
+                client->sendResponse();
         }
         catch (std::exception &e)
         {
@@ -64,39 +67,67 @@ void WebServer::start()
     }
 }
 
-void WebServer::newClient(HttpClient *client)
+bool WebServer::newClient(HttpClient *client)
 {
     while (client->readNextParam());
     client->getRequest()->debug();
-    execRequest(client);
+    return execRequest(client);
 }
 
-void WebServer::execRequest(HttpClient *client)
+bool WebServer::execRequest(HttpClient *client)
 {
     if (!client->getRequest()->isValid())
         throw InvalidRequestException();
     for (auto i = routes.begin(); i != routes.end(); i++)
         if (*(*i) == *(client->getRequest()))
-            return (*i)->requestHandler(client->getRequest()->getRequestType(), client); //TODO other requests types
+        {
+            (*i)->requestHandler(client->getRequest()->getRequestType(), client); //TODO other requests types
+            return true;
+        }
     if (client->getRequest()->getRequestType() == HttpRequest::reqtype::get)
         for (auto i = mappedDirectories.cbegin(); i != mappedDirectories.cend(); i++)
         {
             std::string real;
-            if ((real = (*i)->match(client->getRequest()->getRequestUrl())) != "")
-                return sendFile(real, client);
+            bool isDirectory;
+            if ((real = (*i)->match(client->getRequest()->getRequestUrl(), isDirectory)) != "")
+            {
+                try{
+                    return sendFile(real, client, isDirectory);
+                }
+                catch (Error404 &e)
+                {
+                    (void) e;
+                }
+            }
         }
     throw Error404();
 }
 
-void WebServer::sendFile(const std::string & path, HttpClient * cli)
+bool WebServer::sendFile(const std::string & path, HttpClient * cli, bool isDirectory)
 {
-    FileElement * elem = new FileElement(path);
-    cli->responseGet()->setElement(elem);
-    cli->sendResponseHeader();
-    elem->send(cli->getSocket());
+    if (!isDirectory)
+    {
+        FileElement * elem = new FileElement(path);
+
+        cli->responseGet()->setElement(elem);
+        cli->responseGet()->setContentType(); //TODO find content-mime type
+        try {
+            cli->sendResponseHeader();
+            elem->send(cli->getSocket());
+        }
+        catch (std::exception &e)
+        {
+            (void) e;
+            std::cerr << "Cannot send response" << std::endl;
+        }
+        return false;
+    }
+    //the element will be destroyed in Response::~Response so no leaks here
+    cli->responseGet()->setElement(new DirContentRootElem(path, cli->getRequest()->getRequestUrl()));
+    return true;
 }
 
-void WebServer::registerDirectory(const std::string & path, const std::string & url, bool recursive)
+void WebServer::registerDirectory(const std::string & path, const std::string & url, bool recursive, bool showContent)
 {
-    mappedDirectories.push_back(new WebServer::MappedDirectory(path, url, recursive));
+    mappedDirectories.push_back(new WebServer::MappedDirectory(path, url, recursive, showContent));
 }

@@ -50,7 +50,7 @@ public: //public methods
     /*!
     * Add a real folder to be mapped
     */
-    void registerDirectory(const std::string & path, const std::string & virtualUrl = "/", bool recursive = true);
+    void registerDirectory(const std::string & path, const std::string & virtualUrl = "/", bool recursive = true, bool showDirContent=false);
 
 public: //public nested
     /*!
@@ -162,7 +162,7 @@ private: //private nested
     class MappedDirectory
     {
     public:
-        MappedDirectory(const std::string &realPath, const std::string &virtualPath, bool recur);
+        MappedDirectory(const std::string &realPath, const std::string &virtualPath, bool recur, bool showContent);
         ~MappedDirectory();
 
         /*!
@@ -170,13 +170,29 @@ private: //private nested
         * match the mappedDirectory, or
         * an empty string if it not
         */
-        std::string match(const std::string &url);
+        std::string match(const std::string &url, bool &isDirectory);
+
 
     private:
         const std::string realPath;
         const std::string virtualPath;
         std::list<std::string> virtualPathPart;
         bool recursive;
+        bool showContent;
+        std::string doMatch(const std::string &url);
+
+    private: //private methods
+        /*!
+        * return the real file path if the url
+        * match the mappedDirectory sub-items, or
+        * an empty string if it not
+        */
+        std::string getExtendedPath(const std::list<std::string> &urlParts, std::list<std::string>::const_iterator &pos);
+        /*!
+        * Return true if given path refers to a directory,
+        * false if it's a classical file
+        */
+        bool isDirectory(const std::string &path);
     };
 
     /*!
@@ -196,6 +212,7 @@ private: //private nested
         long long size;
         const std::string path;
         std::ifstream * stream;
+        bool isDirectory;
     };
 
 private: //private functions
@@ -203,21 +220,24 @@ private: //private functions
     * Called when a new client show up. It
     * 1. Read all the request
     * 2. Execute the request
+    * Return true if a response have to be send to the client
     */
-    void newClient(HttpClient *);
+    bool newClient(HttpClient *);
     /*!
     * Called to execute the request. It
     * 1. Analyse the request
     * 2. Check the road
     * 3. Call the AWebPage corresponding to it
     * 4. Send the response
+    * Return true if a response have to be send to the client
     */
-    void execRequest(HttpClient *client);
+    bool execRequest(HttpClient *client);
 
     /*
     * send the file to the client
+    * Return true if a response have to be send to the client
     */
-    void sendFile(const std::string & path, HttpClient * client);
+    bool sendFile(const std::string & path, HttpClient * client, bool isDirectory);
 
 private: //private attributes
     /*!

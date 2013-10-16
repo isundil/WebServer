@@ -69,6 +69,15 @@
     <ClCompile Include="FileElement.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="DirContentRootElem.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="AHtmlNode.cpp">
+      <Filter>Fichiers sources\html</Filter>
+    </ClCompile>
+    <ClCompile Include="Paragraph.cpp">
+      <Filter>Fichiers sources\html</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WebServer.hpp">
@@ -117,6 +126,15 @@
       <Filter>Fichiers d%27en-tête\html</Filter>
     </ClInclude>
     <ClInclude Include="Meta.h">
+      <Filter>Fichiers d%27en-tête\html</Filter>
+    </ClInclude>
+    <ClInclude Include="DirContentRootElem.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="AHtmlNode.h">
+      <Filter>Fichiers d%27en-tête\html</Filter>
+    </ClInclude>
+    <ClInclude Include="Paragraph.h">
       <Filter>Fichiers d%27en-tête\html</Filter>
     </ClInclude>
   </ItemGroup>

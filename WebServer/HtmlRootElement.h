@@ -3,6 +3,7 @@
 #include <string>
 #include <list>
 #include "ARootElement.h"
+#include "AHtmlNode.h"
 
 namespace html
 {
@@ -12,7 +13,7 @@ namespace html
     * HTML container. contains the <!DOCTYPE>, <html> and all the header stuff.
     * body's content can be added using operator '<<'
     */
-    class HtmlRootElement: public ARootElement
+    class HtmlRootElement: public ARootElement, public AHtmlNode
     {
     public: //public methods
         /*!

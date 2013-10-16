@@ -70,8 +70,10 @@ int main(int ac, char **av)
 		std::cerr << "Cannot start server: " << e.what() << std::endl;
 		return -1;
 	}
+
     ws->registerRoute<IndexPage>();
-    ws->registerDirectory("D:/out.pdf", "/public/out.pdf");
+    ws->registerDirectory("D:/", "/public/", true, true);
+    ws->registerDirectory("D:/Project/WebServer/WebServer/", "/public/ws/", true, true);
 
     ws->start();
 	delete ws;
