@@ -12,7 +12,7 @@
 HttpClient::HttpClient(WebServer::ClientSocket *s) : socket(s)
 {
     req = new HttpRequest();
-    addHeader("Cache - Control", "no-cache")->addHeader("Pragma", "no-cache")->addHeader("Content-Type", "text/html; charset=utf-8");
+    addHeader("Cache - Control", "no-cache")->addHeader("Pragma", "no-cache");
     addHeader("X-Cnection", "close");
     responseCode = 200;
     session = NULL;
@@ -98,13 +98,14 @@ void HttpClient::sessionUpdate()
     }
 }
 
-void HttpClient::sendResponse()
+void HttpClient::sendResponseHeader()
 {
     sessionUpdate();
+    addHeader("Content-Type", responseGetConst()->getContentType());
     if (dynamic_cast<html::HtmlRootElement *> (response->getElement()) != NULL)
     {
         html::Meta & meta = ((html::HtmlRootElement *)response->getElement())->getMeta();
-        meta.setIdentifier("http://" +getRequest()->getHost() +getRequest()->getRequestUrl()); //TODO https ?
+        meta.setIdentifier("http://" + getRequest()->getHost() + getRequest()->getRequestUrl()); //TODO https ?
     }
     std::stringstream ss;
     ss << getRequest()->getHttpVersion() << " " << responseCode << " " << getRespondStringCode(responseCode) << std::endl;
@@ -112,11 +113,21 @@ void HttpClient::sendResponse()
     {
         ss << (*i).first << ": " << (*i).second << std::endl;
     }
-	if (getRequest()->getCookies()->hasNew())
-		ss << getRequest()->getCookies()->getString();
+    if (getRequest()->getCookies()->hasNew())
+        ss << getRequest()->getCookies()->getString();
     ss << "Content-Length" << ": " << getRespondSize() << std::endl << std::endl;
     getSocket()->write(ss.str());
+}
+
+void HttpClient::sendResponseBody()
+{
     getSocket()->write(response->getValue());
+}
+
+void HttpClient::sendResponse()
+{
+    this->sendResponseHeader();
+    this->sendResponseBody();
 }
 
 CookieManager * HttpClient::getCookies()

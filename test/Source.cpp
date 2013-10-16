@@ -71,6 +71,7 @@ int main(int ac, char **av)
 		return -1;
 	}
     ws->registerRoute<IndexPage>();
+    ws->registerDirectory("D:/out.pdf", "/public/out.pdf");
 
     ws->start();
 	delete ws;

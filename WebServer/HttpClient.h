@@ -73,6 +73,17 @@ public:
     */
     void sendResponse();
     /*!
+    * Send the response header to the client
+    * SHOULD NOT be used outside the WebServer class
+    */
+    void sendResponseHeader();
+    /*!
+    * Send the response body to the client
+    * SHOULD NOT be used outside the WebServer class
+    */
+    void sendResponseBody();
+
+    /*!
     * Get or Set the response code (ex: 404 -> document not found).
     * If a parameter is given, the response code will be replaced by this value.
     * Return the (new ?) response code.
@@ -114,12 +125,13 @@ public:
     * Return the response document
     */
     const Response * responseGetConst() const;
-
-private:
     /*!
     * The client's socket
+    * SHOULD NOT be used outside the WebSerber class
     */
     WebServer::ClientSocket * getSocket() const;
+private:
+    
     /*!
     * Return the response document length
     */

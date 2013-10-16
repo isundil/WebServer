@@ -13,6 +13,14 @@ public:
     ~Response();
 
     /*!
+    * set content-type (default value: `text/html; charset=utf-8`)
+    */
+    Response & setContentType(const std::string & contentType = "text/html; charset=utf-8");
+    /*!
+    * get content-type
+    */
+    const std::string getContentType() const;
+    /*!
     * Set the element to be sent
     * the element given MUST BE allocated using new()
     */
@@ -36,7 +44,11 @@ public:
 private:
 
     /*!
-    * he response body
+    * The response body
     */
     ARootElement * root;
+    /*!
+    * the content-type
+    */
+    std::string contentType;
 };

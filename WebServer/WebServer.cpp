@@ -4,6 +4,7 @@
 #include "HttpRequest.h"
 #include "AWebPage.h"
 #include "HttpError.h"
+#include "Response.h"
 
 WebServer::WebServer(unsigned int port) : listeningPort(port)
 {
@@ -89,6 +90,10 @@ void WebServer::execRequest(HttpClient *client)
 
 void WebServer::sendFile(const std::string & path, HttpClient * cli)
 {
+    FileElement * elem = new FileElement(path);
+    cli->responseGet()->setElement(elem);
+    cli->sendResponseHeader();
+    elem->send(cli->getSocket());
 }
 
 void WebServer::registerDirectory(const std::string & path, const std::string & url, bool recursive)

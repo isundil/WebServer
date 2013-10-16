@@ -4,12 +4,24 @@
 Response::Response()
 {
     root = NULL;
+    setContentType();
 }
 
 Response::~Response()
 {
     if (root)
         delete root;
+}
+
+Response & Response::setContentType(const std::string & value)
+{
+    this->contentType = value;
+    return *this;
+}
+
+const std::string Response::getContentType() const
+{
+    return contentType;
 }
 
 Response & Response::setElement(ARootElement * value)

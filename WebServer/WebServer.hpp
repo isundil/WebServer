@@ -2,6 +2,7 @@
 
 #include <string>
 #include <list>
+#include "ARootElement.h"
 
 class HttpClient;
 class AWebPage;
@@ -91,6 +92,10 @@ public: //public nested
         */
         void write(const std::string &);
         /*!
+        * Write the `len` given bytes into the socket
+        */
+        void write(const char *value, const long long len);
+        /*!
         * Write the given string into the socket, and add a EOL (\n) at the end
         */
         void writeLine(const std::string &);
@@ -170,7 +175,27 @@ private: //private nested
     private:
         const std::string realPath;
         const std::string virtualPath;
+        std::list<std::string> virtualPathPart;
         bool recursive;
+    };
+
+    /*!
+    * A file about to be sended to the client
+    */
+    class FileElement : public ARootElement
+    {
+    public:
+        FileElement(const std::string & path);
+        ~FileElement();
+
+        const std::string getValue();
+        unsigned int length();
+        void send(ClientSocket * sock);
+
+    private:
+        long long size;
+        const std::string path;
+        std::ifstream * stream;
     };
 
 private: //private functions

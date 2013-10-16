@@ -139,11 +139,20 @@ char WebServer::ClientSocket::readChar()
     return c;
 }
 
-void WebServer::ClientSocket::write(const std::string &value)
+void WebServer::ClientSocket::write(const char *value, const long long len)
 {
 	//std::cout << "OUT:" << value;
-    if ((send(*(SOCKET*) socket, value.c_str(), value.length(), 0)) == SOCKET_ERROR)
+    fd_set writeSet;
+    FD_ZERO(&writeSet);
+    FD_SET(*((SOCKET *)socket), &writeSet);
+    select(1, NULL, &writeSet, NULL, NULL);
+    if ((send(*(SOCKET*) socket, value, (int)len, 0)) == SOCKET_ERROR)
         throw SocketException("send()", "", WSAGetLastError());
+}
+
+void WebServer::ClientSocket::write(const std::string & value)
+{
+    this->write(value.c_str(), value.length());
 }
 
 void WebServer::ClientSocket::writeLine(const std::string &value)
