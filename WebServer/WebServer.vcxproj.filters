@@ -78,6 +78,9 @@
     <ClCompile Include="Paragraph.cpp">
       <Filter>Fichiers sources\html</Filter>
     </ClCompile>
+    <ClCompile Include="Link.cpp">
+      <Filter>Fichiers sources\html</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WebServer.hpp">
@@ -135,6 +138,9 @@
       <Filter>Fichiers d%27en-tête\html</Filter>
     </ClInclude>
     <ClInclude Include="Paragraph.h">
+      <Filter>Fichiers d%27en-tête\html</Filter>
+    </ClInclude>
+    <ClInclude Include="Link.h">
       <Filter>Fichiers d%27en-tête\html</Filter>
     </ClInclude>
   </ItemGroup>

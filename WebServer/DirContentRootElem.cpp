@@ -8,17 +8,38 @@
 # include <dirent.h>
 #endif //WIN
 #include "DirContentRootElem.h"
+#include "Link.h"
 #include "HttpError.h"
 
 DirContentRootElem::DirContentRootElem(const std::string & path, const std::string & virtualPath) :
             html::HtmlRootElement("Index of " + virtualPath)
 {
-    auto dirContent = this->readDir(path);
+    std::string _path = path;
+    std::string parentUrl;
+    std::list<DirContentRootElem::t_file> *dirContent;
+
+    if (path.at(path.length() - 1) != '/')
+        _path += "/";
+    if (virtualPath.at(virtualPath.length() - 1) != '/')
+        parentUrl = virtualPath.substr(0, virtualPath.find_last_of('/'));
+    else
+    {
+        parentUrl = virtualPath.substr(0, virtualPath.find_last_of('/'));
+        parentUrl = virtualPath.substr(0, parentUrl.find_last_of('/'));
+    }
+    if (parentUrl.length() == 0)
+        parentUrl = "/";
+    dirContent = this->readDir(_path);
+    (*this) << new html::Link(parentUrl, std::string("D | Parent directory"));
     for (auto i = dirContent->cbegin(); i != dirContent->cend(); i++)
-        if ((*i).isDir)
-            (*this) << "D | " + (*i).name;
+    {
+        if ((*i).name == ".." || (*i).name == ".")
+            continue;
+        else if ((*i).isDir)
+            (*this) << new html::Link(virtualPath + "/" + (*i).name, "D | " + (*i).name);
         else
-            (*this) << "F | " + (*i).name + " (" + (*i).sizeStr + " o)";
+            (*this) << new html::Link(virtualPath + "/" + (*i).name, "F | " + (*i).name + " (" + (*i).sizeStr + " o)");
+    }
     delete dirContent;
 }
 
@@ -64,8 +85,8 @@ std::list<DirContentRootElem::t_file> *DirContentRootElem::readDir(const std::st
 
     for (size_t i = 0; i < path.length(); i++)
         buf[i] = path.at(i);
-    buf[path.length()] = '*';
-    buf[path.length() +1] = '\0';
+    buf[path.length() + 0] = '*';
+    buf[path.length() + 1] = '\0';
 
     dir = FindFirstFile(buf, &fileData);
     delete [] buf;

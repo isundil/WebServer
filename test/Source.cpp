@@ -72,8 +72,8 @@ int main(int ac, char **av)
 	}
 
     ws->registerRoute<IndexPage>();
-    ws->registerDirectory("/tmp", "/public/", true, true);
-    ws->registerDirectory("/home/isundil/project/", "/public/ws/", true, true);
+    ws->registerDirectory("D:/", "/public/", true, true);
+    ws->registerDirectory("D:/Project/WebServer/WebServer/", "/public/ws/", true, true);
 
     ws->start();
 	delete ws;

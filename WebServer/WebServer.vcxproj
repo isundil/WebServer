@@ -84,6 +84,7 @@
     <ClCompile Include="HtmlRootElement.cpp" />
     <ClCompile Include="HttpClient.cpp" />
     <ClCompile Include="HttpRequest.cpp" />
+    <ClCompile Include="Link.cpp" />
     <ClCompile Include="MappedDirectory.cpp" />
     <ClCompile Include="Meta.cpp" />
     <ClCompile Include="Paragraph.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="HttpClient.h" />
     <ClInclude Include="HttpRequest.h" />
     <ClInclude Include="ARootElement.h" />
+    <ClInclude Include="Link.h" />
     <ClInclude Include="Meta.h" />
     <ClInclude Include="Paragraph.h" />
     <ClInclude Include="RawRootElement.h" />
