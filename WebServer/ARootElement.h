@@ -12,6 +12,8 @@ public:
     */
     virtual const std::string getValue() = 0;
 
+	virtual ~ARootElement() {};
+
     /*!
     * Return the page content length, described in bytes
     */

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <time.h>
+#include <cstring>
 
 class HttpClient;
 

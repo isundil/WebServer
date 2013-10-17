@@ -10,7 +10,7 @@ WebServer::FileElement::FileElement(const std::string & p) : path(p)
         throw Error404();
     size = stream->tellg();
     stream->seekg(0, std::ios::end);
-    size = stream->tellg() - size;
+    size = (long long)stream->tellg() - size;
     stream->seekg(0);
 }
 

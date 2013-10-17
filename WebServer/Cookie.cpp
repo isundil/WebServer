@@ -86,10 +86,11 @@ time_t CookieManager::Data::getExpire() const
     return expire;
 }
 
-void CookieManager::Data::setExpire(const time_t &_value)
+CookieManager::Data &CookieManager::Data::setExpire(const time_t &_value)
 {
     expire = _value;
     isWritten = true;
+	return *this;
 }
 
 std::string CookieManager::Data::getValue() const
@@ -97,12 +98,13 @@ std::string CookieManager::Data::getValue() const
     return value;
 }
 
-void CookieManager::Data::setValue(const std::string &_value)
+CookieManager::Data &CookieManager::Data::setValue(const std::string &_value)
 {
     if (value == _value)
-        return;
+        return *this;
     value = _value;
     isWritten = true;
+	return *this;
 }
 
 bool CookieManager::Data::isModified() const

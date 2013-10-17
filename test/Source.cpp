@@ -34,7 +34,7 @@ class IndexPage : public AWebPage
 		Session * sess = client->sessionGetOrCreate();
         Response * re = client->responseGet();
 
-        char  * sessions[8] = { "Annie", "Arielle", "Anna", "Camille", "Coralie", "Caroline", "Cyntia", "Cyndie" };
+		std::string sessions[8] = { "Annie", "Arielle", "Anna", "Camille", "Coralie", "Caroline", "Cyntia", "Cyndie" };
         if (sess->storage() == NULL)
             sess->storage(new SessionData(sessions[rand() % 8]));
         //re->setElement(new RawRootElement("<!DOCTYPE html><html><body><h1>test</h1><p>test " +((SessionData *)sess->storage())->getValue() +"</p></body></html>\n"));
@@ -72,8 +72,8 @@ int main(int ac, char **av)
 	}
 
     ws->registerRoute<IndexPage>();
-    ws->registerDirectory("D:/", "/public/", true, true);
-    ws->registerDirectory("D:/Project/WebServer/WebServer/", "/public/ws/", true, true);
+    ws->registerDirectory("/tmp", "/public/", true, true);
+    ws->registerDirectory("/home/isundil/project/", "/public/ws/", true, true);
 
     ws->start();
 	delete ws;

@@ -145,7 +145,7 @@ void WebServer::ClientSocket::write(const char *value, const long long len)
     fd_set writeSet;
     FD_ZERO(&writeSet);
     FD_SET(*((SOCKET *)socket), &writeSet);
-    select(1, NULL, &writeSet, NULL, NULL);
+    select((*((SOCKET *)socket) )+1, NULL, &writeSet, NULL, NULL);
     if ((send(*(SOCKET*) socket, value, (int)len, 0)) == SOCKET_ERROR)
         throw SocketException("send()", "", WSAGetLastError());
 }

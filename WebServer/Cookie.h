@@ -35,7 +35,7 @@ private: //private nested
         /*!
         * set the expiration time
         */
-        void setExpire(const time_t &value);
+        Data &setExpire(const time_t &value);
 
         /*!
         * return the cookie's value
@@ -45,7 +45,7 @@ private: //private nested
         /*!
         * set the cookie's value
         */
-        void setValue(const std::string &);
+        Data &setValue(const std::string &);
 
         /*!
         * return true if the cookie has to be sent to the client
@@ -138,9 +138,9 @@ public:
         std::stringstream ss;
         ss << value;
         if (!cookie_exists(name))
-            cookies[name] = new Data(ss.str(), true, time(NULL) + defaultExpire);
+            cookies[name] = new Data(ss.str(), true, expire);
         else
-            cookies[name]->setValue(ss.str());
+            cookies[name]->setValue(ss.str()).setExpire(expire);
         return this;
     }
 

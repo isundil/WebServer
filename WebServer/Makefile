@@ -11,7 +11,15 @@ SRC=	HtmlRootElement.cpp		\
 		WebServer.cpp			\
 		Socket.cpp				\
 		HashGenerator.cpp		\
-		Cookie.cpp
+		Cookie.cpp				\
+		Response.cpp			\
+		AHtmlNode.cpp			\
+		DirContentRootElem.cpp	\
+		FileElement.cpp			\
+		MappedDirectory.cpp		\
+		Meta.cpp				\
+		Paragraph.cpp			\
+		RawRootElem.cpp
 
 OBJ=	$(SRC:.cpp=.o)
 

@@ -1,12 +1,17 @@
 #ifdef _WIN32
 # include <Windows.h>
 # include <fileapi.h>
+#else
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <unistd.h>
+# include <dirent.h>
 #endif //WIN
 #include "DirContentRootElem.h"
 #include "HttpError.h"
 
 DirContentRootElem::DirContentRootElem(const std::string & path, const std::string & virtualPath) :
-            html::HtmlRootElement("Index of " + path)
+            html::HtmlRootElement("Index of " + virtualPath)
 {
     auto dirContent = this->readDir(path);
     for (auto i = dirContent->cbegin(); i != dirContent->cend(); i++)
@@ -73,6 +78,26 @@ std::list<DirContentRootElem::t_file> *DirContentRootElem::readDir(const std::st
     {
         parseFile(fileData, result);
     } 
-#endif //TODO linux
+#else
+	struct dirent *fileData;
+	struct stat fileStat;
+	DIR *dir = opendir(path.c_str());
+	DirContentRootElem::t_file file;
+
+	if (!dir)
+		throw Error404();
+	while ((fileData = readdir(dir)) != NULL)
+	{
+		std::stringstream ss;
+		file.name= fileData->d_name;
+		stat(std::string(path +file.name).c_str(), &fileStat);
+		file.isDir = S_ISDIR(fileStat.st_mode);
+		file.size = fileStat.st_size;
+		ss << file.size;
+		file.sizeStr = ss.str();
+		result->push_back(file);
+	}
+	closedir(dir);
+#endif
     return result;
 }

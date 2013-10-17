@@ -1,6 +1,10 @@
 #ifdef _WIN32
 # include <Windows.h>
 # include <fileapi.h>
+#else
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <unistd.h>
 #endif
 #include "WebServer.hpp"
 #include "HttpClient.h"
@@ -61,8 +65,12 @@ bool WebServer::MappedDirectory::isDirectory(const std::string &filename)
     auto result = GetFileAttributes(buf);
     delete [] buf;
     return (result & FILE_ATTRIBUTE_DIRECTORY) != 0;
+#else
+	struct stat m_stat;
+	stat(filename.c_str(), &m_stat);
+	return S_ISDIR(m_stat.st_mode);
 #endif
-    return false; //TODO linux code
+    return false;
 }
 
 std::string WebServer::MappedDirectory::match(const std::string &url, bool &isD)
