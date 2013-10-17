@@ -90,7 +90,7 @@ std::list<DirContentRootElem::t_file> *DirContentRootElem::readDir(const std::st
 	{
 		std::stringstream ss;
 		file.name= fileData->d_name;
-		stat(std::string(path +file.name).c_str(), &fileStat);
+		stat((path +"/" +file.name).c_str(), &fileStat);
 		file.isDir = S_ISDIR(fileStat.st_mode);
 		file.size = fileStat.st_size;
 		ss << file.size;
