@@ -77,6 +77,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AHtmlNode.cpp" />
+    <ClCompile Include="Anchor.cpp" />
     <ClCompile Include="Cookie.cpp" />
     <ClCompile Include="DirContentRootElem.cpp" />
     <ClCompile Include="FileElement.cpp" />
@@ -84,6 +85,7 @@
     <ClCompile Include="HtmlRootElement.cpp" />
     <ClCompile Include="HttpClient.cpp" />
     <ClCompile Include="HttpRequest.cpp" />
+    <ClCompile Include="JsonRootElement.cpp" />
     <ClCompile Include="Link.cpp" />
     <ClCompile Include="MappedDirectory.cpp" />
     <ClCompile Include="Meta.cpp" />
@@ -99,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AHtmlNode.h" />
+    <ClInclude Include="Anchor.h" />
     <ClInclude Include="AWebPage.h" />
     <ClInclude Include="Cookie.h" />
     <ClInclude Include="DirContentRootElem.h" />
@@ -107,6 +110,7 @@
     <ClInclude Include="HttpClient.h" />
     <ClInclude Include="HttpRequest.h" />
     <ClInclude Include="ARootElement.h" />
+    <ClInclude Include="JsonRootElement.h" />
     <ClInclude Include="Link.h" />
     <ClInclude Include="Meta.h" />
     <ClInclude Include="Paragraph.h" />

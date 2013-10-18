@@ -10,6 +10,8 @@
 #include "../WebServer/Response.h"
 #include "../WebServer/RawRootElement.h"
 
+#include "SessionTest.h"
+
 class SessionData
 {
 public:
@@ -72,6 +74,7 @@ int main(int ac, char **av)
 	}
 
     ws->registerRoute<IndexPage>();
+    ws->registerRoute<SessionTest>();
     ws->registerDirectory("D:/", "/public/", true, true);
     ws->registerDirectory("D:/Project/WebServer/WebServer/", "/public/ws/", true, true);
 

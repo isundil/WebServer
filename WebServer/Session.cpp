@@ -54,3 +54,9 @@ void * Session::storage(void *data)
         _storage = data;
     return _storage;
 }
+
+
+const std::map<std::string, std::string>Session::getMap() const
+{
+    return values;
+}

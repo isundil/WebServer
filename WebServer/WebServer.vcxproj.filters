@@ -45,9 +45,6 @@
     <ClCompile Include="Session.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="HtmlRootElement.cpp">
-      <Filter>Fichiers sources\html</Filter>
-    </ClCompile>
     <ClCompile Include="Cookie.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -56,9 +53,6 @@
     </ClCompile>
     <ClCompile Include="Response.cpp">
       <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="RawRootElem.cpp">
-      <Filter>Fichiers sources\html</Filter>
     </ClCompile>
     <ClCompile Include="Meta.cpp">
       <Filter>Fichiers sources\html</Filter>
@@ -72,14 +66,26 @@
     <ClCompile Include="DirContentRootElem.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="AHtmlNode.cpp">
-      <Filter>Fichiers sources\html</Filter>
-    </ClCompile>
     <ClCompile Include="Paragraph.cpp">
       <Filter>Fichiers sources\html</Filter>
     </ClCompile>
     <ClCompile Include="Link.cpp">
       <Filter>Fichiers sources\html</Filter>
+    </ClCompile>
+    <ClCompile Include="Anchor.cpp">
+      <Filter>Fichiers sources\html</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonRootElement.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="HtmlRootElement.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="AHtmlNode.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="RawRootElem.cpp">
+      <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -110,9 +116,6 @@
     <ClInclude Include="Session.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="HtmlRootElement.h">
-      <Filter>Fichiers d%27en-tête\html</Filter>
-    </ClInclude>
     <ClInclude Include="Cookie.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -121,12 +124,6 @@
     </ClInclude>
     <ClInclude Include="Response.h">
       <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="ARootElement.h">
-      <Filter>Fichiers d%27en-tête\html</Filter>
-    </ClInclude>
-    <ClInclude Include="RawRootElement.h">
-      <Filter>Fichiers d%27en-tête\html</Filter>
     </ClInclude>
     <ClInclude Include="Meta.h">
       <Filter>Fichiers d%27en-tête\html</Filter>
@@ -142,6 +139,21 @@
     </ClInclude>
     <ClInclude Include="Link.h">
       <Filter>Fichiers d%27en-tête\html</Filter>
+    </ClInclude>
+    <ClInclude Include="Anchor.h">
+      <Filter>Fichiers d%27en-tête\html</Filter>
+    </ClInclude>
+    <ClInclude Include="ARootElement.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="HtmlRootElement.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonRootElement.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="RawRootElement.h">
+      <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

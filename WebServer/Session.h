@@ -115,11 +115,17 @@ public:
     */
     void * storage(void * storage = NULL); //TODO interface
 
+    /*!
+    * Return the main data storage, as a const.
+    * SHOULD only be used for debug purpose
+    */
+    const std::map<std::string, std::string>getMap() const;
+
 private:
     /*!
     * the data of the session
     */
-    std::map<const std::string, std::string> values;
+    std::map<std::string, std::string> values;
     /*!
     * the lifetime of the session
     */
