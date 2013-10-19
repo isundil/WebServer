@@ -132,13 +132,6 @@ std::string WebServer::ClientSocket::getInfos() const
     return ss.str();
 }
 
-char WebServer::ClientSocket::readChar()
-{
-    char c;
-    recv(*(SOCKET *)socket, &c, 1, 0);
-    return c;
-}
-
 void WebServer::ClientSocket::write(const char *value, const long long len)
 {
 	//std::cout << "OUT:" << value;
@@ -163,6 +156,48 @@ void WebServer::ClientSocket::writeLine(const std::string &value)
 unsigned short WebServer::ClientSocket::getPort() const
 {
     return this->port;
+}
+
+void WebServer::ClientSocket::readBytes(char * resultBuf, unsigned int _len)
+{
+    if (bufIndex[0] == bufIndex[1])
+    {
+        int rd = recv(*(SOCKET*) socket, &buf[bufIndex[0]], 2048 - bufIndex[0], 0);
+        if (rd == -1)
+            throw SocketException("recv()", "", WSAGetLastError());
+        bufIndex[1] += rd;
+        if (rd == 2048 - bufIndex[0])
+        {
+            rd = recv(*(SOCKET*) socket, &buf[0], bufIndex[0], 0);
+            if (rd == -1)
+                throw SocketException("recv()", "", WSAGetLastError());
+            bufIndex[1] += rd;
+            while (bufIndex[1] >= 2048)
+                bufIndex[1] -= 2048;
+        }
+    }
+    int lastChar;
+    int len = 0;
+    for (lastChar = bufIndex[0]; lastChar != bufIndex[1]; lastChar = (lastChar + 1) % 2048, len++)
+        if (len == _len)
+            break;
+    if (lastChar >= bufIndex[0])
+        memcpy(resultBuf, &buf[bufIndex[0]], len);
+    else
+    {
+        memcpy(resultBuf, &buf[bufIndex[0]], 2048 - bufIndex[0]);
+        int remainLen = len - (2048 - bufIndex[0]);
+        memcpy(&resultBuf[(2048 - bufIndex[0]) % 2048], buf, remainLen);
+    }
+    bufIndex[0] += len + 1;
+    while (bufIndex[0] >= 2048)
+        bufIndex[0] -= 2048;
+    if (len == 2048 - 1)
+        bufIndex[0] = bufIndex[1];
+    resultBuf[len] = '\0';
+    for (int i = 0; i < len; i++)
+        if (resultBuf[i] == '\r')
+            resultBuf[i] = 0;
 }
 
 std::string WebServer::ClientSocket::readLine()

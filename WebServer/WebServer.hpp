@@ -80,9 +80,9 @@ public: //public nested
         */
         std::string getInfos() const;
         /*!
-        * read one char on the client socket. Use the round-buffer to read
+        * read n bytes from the client socket. Use the round-buffer to read
         */
-        char readChar();
+        void readBytes(char * buffer, unsigned int len);
         /*!
         * read one line on the client socket. Use the round-buffer to read
         */

@@ -130,6 +130,15 @@ public:
     * SHOULD NOT be used outside the WebSerber class
     */
     WebServer::ClientSocket * getSocket() const;
+    /*!
+    * Read data sent from the client
+    */
+    HttpClient & readData();
+    /*!
+    * Return the POST data
+    */
+    const std::map<std::string, std::string> getPostData() const;
+
 private:
     
     /*!

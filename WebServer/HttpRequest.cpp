@@ -44,7 +44,7 @@ HttpRequest *HttpRequest::setRequest(const std::string & request)
     for (auto i = requestFields.cbegin(); i != requestFields.cend(); i++)
     {
         if (i == requestFields.cbegin())
-            requestUrl = *(i);
+            requestUrl = url_decode(*(i));
         else
             httpVersion = *(i);
     }
@@ -61,6 +61,40 @@ void HttpRequest::debug() const
     std::cout << "REQUEST: " << request.first << std::endl;
     for (auto i = paramList.cbegin(); i != paramList.cend(); i++)
         std::cout << (*i).first << " => " << (*i).second << std::endl;
+}
+
+const std::map<std::string, std::string> HttpRequest::getData() const
+{
+    return data;
+}
+
+unsigned int HttpRequest::getDataLength() const
+{
+    for (auto i = paramList.cbegin(); i != paramList.cend(); i++)
+    {
+        if ((*i).first == "Content-Length")
+        {
+            unsigned int result;
+            std::stringstream ss((*i).second);
+            ss >> result;
+            return result;
+        }
+    }
+    return 0;
+}
+
+void HttpRequest::parseData(const char *buffer)
+{
+    std::list<std::string> data = string_split(buffer, '&');
+    size_t pos;
+
+    for (auto i = data.cbegin(); i != data.cend(); i++)
+    {
+        pos = (*i).find("=");
+        if (pos == (*i).npos)
+            continue;
+        this->data[(*i).substr(0, pos)] = url_decode((*i).substr(pos +1));
+    }
 }
 
 const std::string HttpRequest::getHost() const

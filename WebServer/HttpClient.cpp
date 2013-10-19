@@ -90,6 +90,32 @@ bool HttpClient::readNextParam()
     return this->addParam(line);
 }
 
+bool HttpClient::addParam(const std::string &param)
+{
+    if (param == "")
+        return false;
+    size_t pos;
+    if ((pos = param.find(":")) == param.npos)
+        req->setRequest(param);
+    else
+        req->addParam(param.substr(0, pos), param.substr(pos + 1));
+    return (true);
+}
+
+HttpClient & HttpClient::readData()
+{
+    const unsigned int dataLen = req->getDataLength();
+    char * buffer;
+
+    if (req->getData().size() != 0 || dataLen == 0)
+        return *this;
+    buffer = new char[dataLen +1];
+    this->getSocket()->readBytes(buffer, dataLen);
+    req->parseData(buffer);
+    delete [] buffer;
+    return *this;
+}
+
 void HttpClient::sessionUpdate()
 {
     if (session)
@@ -157,18 +183,6 @@ const WebServer::ClientSocket * HttpClient::getConstSocket() const
     return socket;
 }
 
-bool HttpClient::addParam(const std::string &param)
-{
-    if (param == "")
-        return false;
-    size_t pos;
-    if ((pos = param.find(":")) == param.npos)
-        req->setRequest(param);
-    else
-        req->addParam(param.substr(0, pos), param.substr(pos +1));
-    return (true);
-}
-
 void HttpClient::debug() const
 {
     this->req->debug();
@@ -221,4 +235,9 @@ Response * HttpClient::responseGet()
 const Response * HttpClient::responseGetConst() const
 {
     return response;
+}
+
+const std::map<std::string, std::string> HttpClient::getPostData() const
+{
+    return req->getData();
 }

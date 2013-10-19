@@ -39,18 +39,17 @@ class IndexPage : public AWebPage
 		std::string sessions[8] = { "Annie", "Arielle", "Anna", "Camille", "Coralie", "Caroline", "Cyntia", "Cyndie" };
         if (sess->storage() == NULL)
             sess->storage(new SessionData(sessions[rand() % 8]));
-        //re->setElement(new RawRootElement("<!DOCTYPE html><html><body><h1>test</h1><p>test " +((SessionData *)sess->storage())->getValue() +"</p></body></html>\n"));
-        html::HtmlRootElement * htmlRoot = new html::HtmlRootElement("Example page");
-        re->setElement(htmlRoot);
-        htmlRoot->addScript("test.js").addStyle("test.css").addScript("script2.js");
+        re->setElement(new RawRootElement("<!DOCTYPE html><html><body><form method='post' action='#'><input type='text' name='a' /><input type='text' name='b' /><input type='submit' /></form></body></html>\n"));
+        //html::HtmlRootElement * htmlRoot = new html::HtmlRootElement("Example page");
+        //re->setElement(htmlRoot);
+        //htmlRoot->addScript("test.js").addStyle("test.css").addScript("script2.js");
         //if (!s)
         //    client->sessionDestroy();
     }
 
     void requestPost(HttpClient * client)
     {
-        const std::string result = "BAAAAAAH";
-        client->responseGet()->setElement(new RawRootElement(result));
+        this->requestGet(client);
     }
 
     const std::string getRequestUrl()

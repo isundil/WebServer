@@ -70,6 +70,7 @@ void WebServer::start()
 bool WebServer::newClient(HttpClient *client)
 {
     while (client->readNextParam());
+    client->readData();
     client->getRequest()->debug();
     return execRequest(client);
 }

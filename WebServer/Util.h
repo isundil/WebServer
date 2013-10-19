@@ -19,3 +19,9 @@ std::string epur_begin_str(const char *str);
 * modify the "input" parameter
 */
 void replace_all(std::string &in, const std::string &before, const std::string & after);
+
+/*!
+* Convert an url-string scheme to a readable one
+* ex: "a+b%3D" -> "a b="
+*/
+std::string url_decode(const std::string &in);

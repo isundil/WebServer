@@ -45,6 +45,10 @@ public: //public methods
     const std::string getHost() const;
 	CookieManager * getCookies();
 
+    const std::map<std::string, std::string> getData() const;
+    unsigned int getDataLength() const;
+    void parseData(const char * data);
+
     void debug() const;
 
 private: //privates method
@@ -56,4 +60,5 @@ private: //private attributes
     std::string requestUrl;
     std::string httpVersion;
 	CookieManager cookieMng;
+    std::map<std::string, std::string> data;
 };
