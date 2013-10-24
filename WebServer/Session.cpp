@@ -48,7 +48,7 @@ time_t Session::getExpire() const
     return destroyAt;
 }
 
-void * Session::storage(void *data)
+SessionStorage * Session::storage(SessionStorage *data)
 {
     if (data)
         _storage = data;

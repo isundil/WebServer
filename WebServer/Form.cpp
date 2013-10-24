@@ -56,7 +56,7 @@ Form::AInput * Form::getChild(const std::string &name) const
         AInput * _i = dynamic_cast<AInput *> (*i);
         if (_i == NULL)
             continue;
-        if (_i->inputName() == "name")
+        if (_i->inputName() == name)
             return _i;
     }
     return NULL;

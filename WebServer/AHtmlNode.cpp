@@ -95,7 +95,7 @@ const std::string AHtmlNode::toBeginString()
         result += " style=\"" + *styleName + "\"";
     if (canHaveChildren)
         return result + ">";
-    return result + "\\>";
+    return result + "/>";
 }
 
 const std::string AHtmlNode::toEndString()

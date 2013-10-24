@@ -10,10 +10,10 @@
 #include "../WebServer/Response.h"
 #include "../WebServer/RawRootElement.h"
 
-#include "SessionTest.h"
+//#include "SessionTest.h"
 #include "FormTest.h"
 
-class SessionData
+class SessionData: public SessionStorage
 {
 public:
     SessionData(const std::string & val) : data(val) {};
@@ -33,17 +33,17 @@ class IndexPage : public AWebPage
     {
 		client->getCookies()->setValue("a", 42)->setValue("test_string", "coucou les gens");
         client->getCookies()->destroy("bbec");
-        bool s = client->sessionGetOrNull() == NULL;
+        //bool s = client->sessionGetOrNull() == NULL;
 		Session * sess = client->sessionGetOrCreate();
         Response * re = client->responseGet();
 
 		std::string sessions[8] = { "Annie", "Arielle", "Anna", "Camille", "Coralie", "Caroline", "Cyntia", "Cyndie" };
         if (sess->storage() == NULL)
             sess->storage(new SessionData(sessions[rand() % 8]));
-        re->setElement(new RawRootElement("<!DOCTYPE html><html><body><form method='post' action='#'><input type='text' name='a' /><input type='text' name='b' /><input type='submit' /></form></body></html>\n"));
-        //html::HtmlRootElement * htmlRoot = new html::HtmlRootElement("Example page");
-        //re->setElement(htmlRoot);
-        //htmlRoot->addScript("test.js").addStyle("test.css").addScript("script2.js");
+        //re->setElement(new RawRootElement("<!DOCTYPE html><html><body><form method='post' action='#'><input type='text' name='a' /><input type='text' name='b' /><input type='submit' /></form></body></html>\n"));
+        html::HtmlRootElement * htmlRoot = new html::HtmlRootElement("Example page");
+        re->setElement(htmlRoot);
+        htmlRoot->addScript("test.js").addStyle("test.css").addScript("script2.js");
         //if (!s)
         //    client->sessionDestroy();
     }
@@ -65,7 +65,7 @@ int main(int ac, char **av)
 	(void)ac; (void)av;
 	WebServer *ws;
 	try {
-		ws = new WebServer(8080);
+		ws = new WebServer(atoi(av[1]));
 	}
 	catch (SocketException &e)
 	{
@@ -74,10 +74,9 @@ int main(int ac, char **av)
 	}
 
     ws->registerRoute<IndexPage>();
-    ws->registerRoute<SessionTest>();
+//    ws->registerRoute<SessionTest>();
     ws->registerRoute<FormTest>();
-    ws->registerDirectory("D:/", "/public/", true, true);
-    ws->registerDirectory("D:/Project/WebServer/WebServer/", "/public/ws/", true, true);
+    ws->registerDirectory("/home/cafeine/projects/WebServer/", "/public/", true, true);
 
     ws->start();
 	delete ws;

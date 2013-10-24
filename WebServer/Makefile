@@ -19,7 +19,16 @@ SRC=	HtmlRootElement.cpp		\
 		MappedDirectory.cpp		\
 		Meta.cpp				\
 		Paragraph.cpp			\
-		RawRootElem.cpp
+		RawRootElem.cpp			\
+		Link.cpp				\
+		Form.cpp				\
+		AInput.cpp				\
+		BasicInput.cpp			\
+		AWebPage.cpp			\
+		HiddenField.cpp			\
+		TextBox.cpp				\
+		PasswordBox.cpp			\
+		SubmitButton.cpp
 
 OBJ=	$(SRC:.cpp=.o)
 

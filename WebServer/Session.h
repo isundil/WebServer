@@ -4,6 +4,12 @@
 #include <string>
 #include <sstream>
 
+class SessionStorage
+{
+public:
+    virtual ~SessionStorage() {};
+};
+
 /*!
 * Session data
 */
@@ -113,7 +119,7 @@ public:
     * SHOULD BE allocated using new(). WILL BE delete() on session
     * destructor call.
     */
-    void * storage(void * storage = NULL); //TODO interface
+    SessionStorage * storage(SessionStorage * storage = NULL); //TODO interface
 
     /*!
     * Return the main data storage, as a const.
@@ -137,5 +143,5 @@ private:
     /*!
     * the storage area for custom objects
     */
-    void * _storage;
+    SessionStorage * _storage;
 };

@@ -22,8 +22,10 @@ namespace html
         * copy constructor
         */
         ABasicInput(const ABasicInput<T> &other)
-            : ABasicInput(other.type, other.inputName(), other.value()), _value(other._value)
-        { }
+            : ABasicInput(other.type, other.inputName(), other.value())
+        {
+            _value = (other._value);
+        }
         /*!
         * destructor
         */

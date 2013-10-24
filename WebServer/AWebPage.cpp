@@ -18,20 +18,20 @@ AWebPage::~AWebPage()
 void AWebPage::prepareForm(HttpClient *client)
 {
     std::string name;
-
-    try {
+    
+    try
+    {
         name = client->getPostData().at("name");
     }
     catch (std::out_of_range &e)
     {
-        (void) e;
         return;
     }
 
     for (auto i = forms.begin(); i != forms.end(); i++)
     {
-        Form::HiddenField *c = dynamic_cast<Form::HiddenField *> ((*i)->getChild("NULL"));
-        if (c != NULL)
+        Form::HiddenField *c = dynamic_cast<Form::HiddenField *> ((*i)->getChild("name"));
+        if (c != NULL && c->value() == name)
         {
             client->setForm(*i);
             return;
