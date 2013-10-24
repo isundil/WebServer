@@ -177,7 +177,7 @@ void WebServer::ClientSocket::readBytes(char * resultBuf, unsigned int _len)
         }
     }
     int lastChar;
-    int len = 0;
+    unsigned int len = 0;
     for (lastChar = bufIndex[0]; lastChar != bufIndex[1]; lastChar = (lastChar + 1) % 2048, len++)
         if (len == _len)
             break;
@@ -195,7 +195,7 @@ void WebServer::ClientSocket::readBytes(char * resultBuf, unsigned int _len)
     if (len == 2048 - 1)
         bufIndex[0] = bufIndex[1];
     resultBuf[len] = '\0';
-    for (int i = 0; i < len; i++)
+    for (unsigned int i = 0; i < len; i++)
         if (resultBuf[i] == '\r')
             resultBuf[i] = 0;
 }

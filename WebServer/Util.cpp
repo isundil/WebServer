@@ -57,7 +57,7 @@ static const std::string getAsciiChar(const char * in)
 std::string url_decode(const std::string &in)
 {
     std::string result = in;
-    unsigned int off = 0;
+    size_t off = 0;
 
     while ((off = result.find("+", off)) != result.npos)
         result.replace(off, 1, " ");
