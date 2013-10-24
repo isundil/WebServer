@@ -19,6 +19,12 @@
     <Filter Include="Fichiers sources\html">
       <UniqueIdentifier>{1fb05641-1b97-4eb7-a089-e73f51bb9782}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fichiers d%27en-tête\html\Form">
+      <UniqueIdentifier>{4858e839-a809-4ab5-ab67-d925e5fbfab5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Fichiers sources\html\Form">
+      <UniqueIdentifier>{cbb53f27-10b4-4b75-8a5c-335bb291e91a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WebServer.cpp">
@@ -87,6 +93,30 @@
     <ClCompile Include="RawRootElem.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="Form.cpp">
+      <Filter>Fichiers sources\html</Filter>
+    </ClCompile>
+    <ClCompile Include="AWebPage.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="HiddenField.cpp">
+      <Filter>Fichiers sources\html\Form</Filter>
+    </ClCompile>
+    <ClCompile Include="AInput.cpp">
+      <Filter>Fichiers sources\html\Form</Filter>
+    </ClCompile>
+    <ClCompile Include="SubmitButton.cpp">
+      <Filter>Fichiers sources\html\Form</Filter>
+    </ClCompile>
+    <ClCompile Include="TextBox.cpp">
+      <Filter>Fichiers sources\html\Form</Filter>
+    </ClCompile>
+    <ClCompile Include="PasswordBox.cpp">
+      <Filter>Fichiers sources\html\Form</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicInput.cpp">
+      <Filter>Fichiers sources\html\Form</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WebServer.hpp">
@@ -154,6 +184,27 @@
     </ClInclude>
     <ClInclude Include="RawRootElement.h">
       <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="Form.h">
+      <Filter>Fichiers d%27en-tête\html</Filter>
+    </ClInclude>
+    <ClInclude Include="hiddenField.h">
+      <Filter>Fichiers d%27en-tête\html\Form</Filter>
+    </ClInclude>
+    <ClInclude Include="AInput.h">
+      <Filter>Fichiers d%27en-tête\html\Form</Filter>
+    </ClInclude>
+    <ClInclude Include="SubmitButton.h">
+      <Filter>Fichiers d%27en-tête\html\Form</Filter>
+    </ClInclude>
+    <ClInclude Include="TextBox.h">
+      <Filter>Fichiers d%27en-tête\html\Form</Filter>
+    </ClInclude>
+    <ClInclude Include="PasswordBox.h">
+      <Filter>Fichiers d%27en-tête\html\Form</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicInput.h">
+      <Filter>Fichiers d%27en-tête\html\Form</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

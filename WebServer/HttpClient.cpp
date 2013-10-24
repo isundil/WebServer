@@ -8,6 +8,7 @@
 #include "Response.h"
 #include "HtmlRootElement.h"
 #include "Meta.h"
+#include "Form.h"
 
 HttpClient::HttpClient(WebServer::ClientSocket *s) : socket(s)
 {
@@ -16,6 +17,7 @@ HttpClient::HttpClient(WebServer::ClientSocket *s) : socket(s)
     addHeader("X-Cnection", "close");
     responseCode = 200;
     session = NULL;
+    form = NULL;
     response = new Response();
 }
 
@@ -24,6 +26,8 @@ HttpClient::~HttpClient()
     delete socket;
     delete req;
     delete response;
+    if (form)
+        delete form;
 }
 
 std::string HttpClient::getRespondStringCode(unsigned short code)
@@ -240,4 +244,15 @@ const Response * HttpClient::responseGetConst() const
 const std::map<std::string, std::string> HttpClient::getPostData() const
 {
     return req->getData();
+}
+
+HttpClient &HttpClient::setForm(html::Form *f)
+{
+    form = new html::Form(*f, getPostData());
+    return *this;
+}
+
+html::Form *HttpClient::getForm() const
+{
+    return form;
 }

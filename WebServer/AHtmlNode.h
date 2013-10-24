@@ -15,11 +15,7 @@ namespace html
         AHtmlNode &styleSet(const std::string & stylename);
         std::string * styleGet() const;
         AHtmlNode &styleRemove();
-
-        AHtmlNode &attributeAdd(const std::string &key, const std::string &value);
-        const std::string attributeGet(const std::string &key) const;
-        AHtmlNode &attributeRemove(const std::string &key);
-
+        
         virtual AHtmlNode & operator<<(const std::string &child);
         virtual AHtmlNode & operator<<(AHtmlNode *child);
 
@@ -27,6 +23,10 @@ namespace html
         virtual const std::string toString();
 
     protected:
+        AHtmlNode &attributeAdd(const std::string &key, const std::string &value);
+        const std::string attributeGet(const std::string &key) const;
+        AHtmlNode &attributeRemove(const std::string &key);
+
         bool canHaveChildren;
         bool canHaveStyle;
 
@@ -35,6 +35,7 @@ namespace html
         virtual const std::string toContentString();
         
         std::string name;
+        const std::list<AHtmlNode *> &getChildren() const;
 
     private:
         std::string * styleName;

@@ -77,11 +77,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AHtmlNode.cpp" />
+    <ClCompile Include="AInput.cpp" />
     <ClCompile Include="Anchor.cpp" />
+    <ClCompile Include="AWebPage.cpp" />
+    <ClCompile Include="BasicInput.cpp" />
     <ClCompile Include="Cookie.cpp" />
     <ClCompile Include="DirContentRootElem.cpp" />
     <ClCompile Include="FileElement.cpp" />
+    <ClCompile Include="Form.cpp" />
     <ClCompile Include="HashGenerator.cpp" />
+    <ClCompile Include="HiddenField.cpp" />
     <ClCompile Include="HtmlRootElement.cpp" />
     <ClCompile Include="HttpClient.cpp" />
     <ClCompile Include="HttpRequest.cpp" />
@@ -90,22 +95,29 @@
     <ClCompile Include="MappedDirectory.cpp" />
     <ClCompile Include="Meta.cpp" />
     <ClCompile Include="Paragraph.cpp" />
+    <ClCompile Include="PasswordBox.cpp" />
     <ClCompile Include="RawRootElem.cpp" />
     <ClCompile Include="Response.cpp" />
     <ClCompile Include="Session.cpp" />
     <ClCompile Include="SessionManager.cpp" />
     <ClCompile Include="Socket.cpp" />
     <ClCompile Include="SocketException.cpp" />
+    <ClCompile Include="SubmitButton.cpp" />
+    <ClCompile Include="TextBox.cpp" />
     <ClCompile Include="Util.cpp" />
     <ClCompile Include="WebServer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AHtmlNode.h" />
+    <ClInclude Include="AInput.h" />
     <ClInclude Include="Anchor.h" />
     <ClInclude Include="AWebPage.h" />
+    <ClInclude Include="BasicInput.h" />
     <ClInclude Include="Cookie.h" />
     <ClInclude Include="DirContentRootElem.h" />
+    <ClInclude Include="Form.h" />
     <ClInclude Include="HashGenerator.h" />
+    <ClInclude Include="hiddenField.h" />
     <ClInclude Include="HtmlRootElement.h" />
     <ClInclude Include="HttpClient.h" />
     <ClInclude Include="HttpRequest.h" />
@@ -114,12 +126,15 @@
     <ClInclude Include="Link.h" />
     <ClInclude Include="Meta.h" />
     <ClInclude Include="Paragraph.h" />
+    <ClInclude Include="PasswordBox.h" />
     <ClInclude Include="RawRootElement.h" />
     <ClInclude Include="Response.h" />
     <ClInclude Include="Session.h" />
     <ClInclude Include="SessionManager.h" />
     <ClInclude Include="SocketException.h" />
     <ClInclude Include="HttpError.h" />
+    <ClInclude Include="SubmitButton.h" />
+    <ClInclude Include="TextBox.h" />
     <ClInclude Include="Util.h" />
     <ClInclude Include="WebServer.hpp" />
   </ItemGroup>

@@ -51,6 +51,10 @@ public: //public methods
 
     void debug() const;
 
+public: //public static
+    static enum HttpRequest::reqtype stringToReqType(const std::string &value);
+    static const std::string reqTypeToString(reqtype value);
+
 private: //privates method
 	void evalCookies(const std::string &);
 

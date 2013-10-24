@@ -7,6 +7,10 @@ class CookieManager;
 class HttpRequest;
 class Response;
 class Session;
+namespace html
+{
+    class Form;
+}
 
 /*!
 * This class represents a http client which do a request.
@@ -139,6 +143,16 @@ public:
     */
     const std::map<std::string, std::string> getPostData() const;
 
+    /*!
+    * Set the triggered form
+    */
+    HttpClient &setForm(html::Form *form);
+
+    /*!
+    * Get the form which has been sended to access the page
+    */
+    html::Form *getForm() const;
+
 private:
     
     /*!
@@ -179,4 +193,8 @@ private:
     * The document response
     */
     Response *response;
+    /*!
+    * The form sent by the client
+    */
+    html::Form *form;
 };

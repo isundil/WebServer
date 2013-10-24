@@ -121,3 +121,8 @@ const std::string AHtmlNode::toString()
     result += this->toEndString();
     return result;
 }
+
+const std::list<AHtmlNode *> &AHtmlNode::getChildren() const
+{
+    return children;
+}

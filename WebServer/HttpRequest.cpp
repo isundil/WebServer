@@ -4,7 +4,7 @@
 #include "HttpRequest.h"
 #include "Util.h"
 
-static inline enum HttpRequest::reqtype getEnum(const std::string &input)
+enum HttpRequest::reqtype HttpRequest::stringToReqType(const std::string &input)
 {
     std::map<std::string, const HttpRequest::reqtype> map;
     map.insert(std::pair<std::string, const HttpRequest::reqtype>("OPTIONS", HttpRequest::reqtype::option));
@@ -15,6 +15,20 @@ static inline enum HttpRequest::reqtype getEnum(const std::string &input)
     map.insert(std::pair<std::string, const HttpRequest::reqtype>("DELETE", HttpRequest::reqtype::del));
     map.insert(std::pair<std::string, const HttpRequest::reqtype>("TRACE", HttpRequest::reqtype::trace));
     map.insert(std::pair<std::string, const HttpRequest::reqtype>("CONNECT", HttpRequest::reqtype::connect));
+    return map[input];
+}
+
+const std::string HttpRequest::reqTypeToString(enum HttpRequest::reqtype input)
+{
+    std::map<const HttpRequest::reqtype, std::string> map;
+    map.insert(std::pair<const HttpRequest::reqtype, std::string>(HttpRequest::reqtype::option, "OPTIONS"));
+    map.insert(std::pair<const HttpRequest::reqtype, std::string>(HttpRequest::reqtype::get, "GET"));
+    map.insert(std::pair<const HttpRequest::reqtype, std::string>(HttpRequest::reqtype::head, "HEAD"));
+    map.insert(std::pair<const HttpRequest::reqtype, std::string>(HttpRequest::reqtype::post, "POST"));
+    map.insert(std::pair<const HttpRequest::reqtype, std::string>(HttpRequest::reqtype::put, "PUT"));
+    map.insert(std::pair<const HttpRequest::reqtype, std::string>(HttpRequest::reqtype::del, "DELETE"));
+    map.insert(std::pair<const HttpRequest::reqtype, std::string>(HttpRequest::reqtype::trace, "TRACE"));
+    map.insert(std::pair<const HttpRequest::reqtype, std::string>(HttpRequest::reqtype::connect, "CONNECT"));
     return map[input];
 }
 
@@ -39,7 +53,7 @@ HttpRequest *HttpRequest::setRequest(const std::string & request)
 {
     int pos = request.find(' ');
     std::string first = request.substr(0, pos);
-    this->request = std::pair<enum reqtype, std::string>(getEnum(first), request.substr(pos +1));
+    this->request = std::pair<enum reqtype, std::string>(HttpRequest::stringToReqType(first), request.substr(pos +1));
     std::list<std::string> requestFields = string_split(this->request.second, ' ');
     for (auto i = requestFields.cbegin(); i != requestFields.cend(); i++)
     {

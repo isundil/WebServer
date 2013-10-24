@@ -5,9 +5,13 @@
 #include "Util.h"
 #include "HtmlRootElement.h"
 
+
 class HttpClient;
 class AWebPage;
-
+namespace html
+{
+    class Form;
+}
 typedef void (AWebPage::*AWebPageRequestHandler)(HttpClient *);
 
 /*!
@@ -98,54 +102,33 @@ public: // public route function to override
     /*!
     * Select the good request type, and call it
     */
-    void requestHandler(HttpRequest::reqtype type, HttpClient * client)
-    {
-        AWebPageRequestHandler ptrs [9];
-
-        ptrs[HttpRequest::option] = &AWebPage::requestOption;
-        ptrs[HttpRequest::get] = &AWebPage::requestGet;
-        ptrs[HttpRequest::head] = &AWebPage::requestHead;
-        ptrs[HttpRequest::post] = &AWebPage::requestPost;
-        ptrs[HttpRequest::put] = &AWebPage::requestPut;
-        ptrs[HttpRequest::del] = &AWebPage::requestDel;
-        ptrs[HttpRequest::trace] = &AWebPage::requestTrace;
-        ptrs[HttpRequest::connect] = &AWebPage::requestConnect;
-        (this->*ptrs[type])(client);
-    }
+    void requestHandler(HttpRequest::reqtype type, HttpClient * client);
 
 public:
     /*!
     * Init internal attributes
     */
-    AWebPage() {};
+    AWebPage();
+    /*!
+    * Destroy the object
+    */
+    virtual ~AWebPage();
+
+protected:
+    /*!
+    * Register a form
+    */
+    void registerForm(html::Form * form);
 
 private:
     /*!
     * Return true if the requestedUrl matches the current document's url
     */
-    bool urlMatch(const std::string & requestUrl, const std::string &myUrl)
-    {
-        std::list<std::string> reqUrlList = string_split(requestUrl, '/');
-        std::list<std::string> routeUrlList = string_split(myUrl, '/');
+    bool urlMatch(const std::string & requestUrl, const std::string &myUrl);
 
-        auto a = reqUrlList.cbegin();   //const iterator
-        auto b = routeUrlList.cbegin(); //const iterator
-
-        for (; a != reqUrlList.cend() && b != routeUrlList.cend();)
-        {
-            while (a != reqUrlList.cend() && (*a).size() == 0)
-                a++;
-            while (b != routeUrlList.cend() && (*b).size() == 0)
-                b++;
-            if (a == reqUrlList.cend() && b == routeUrlList.cend())
-                return true;
-            if ((a == reqUrlList.cend() || b == routeUrlList.cend()) ||
-                ((*b).size() == 0 || (*a).size() == 0) ||
-                ((*b).at(0) != '$' && *b != *a))
-                return false;
-            a++;
-            b++;
-        }
-        return true;
-    }
+    std::list<html::Form *> forms;
+    /*!
+    * Prepare the potencial form
+    */
+    void prepareForm(HttpClient * client);
 };

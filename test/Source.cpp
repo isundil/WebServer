@@ -11,6 +11,7 @@
 #include "../WebServer/RawRootElement.h"
 
 #include "SessionTest.h"
+#include "FormTest.h"
 
 class SessionData
 {
@@ -74,6 +75,7 @@ int main(int ac, char **av)
 
     ws->registerRoute<IndexPage>();
     ws->registerRoute<SessionTest>();
+    ws->registerRoute<FormTest>();
     ws->registerDirectory("D:/", "/public/", true, true);
     ws->registerDirectory("D:/Project/WebServer/WebServer/", "/public/ws/", true, true);
 
