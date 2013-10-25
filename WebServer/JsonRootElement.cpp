@@ -3,7 +3,7 @@
 JsonRootElement::JsonRootElement()
 { }
 
-JsonRootElement::JsonRootElement(const std::list<std::string, std::string> &value)
+JsonRootElement::JsonRootElement(const std::list<std::string> &value)
 {
     this->setValue(value);
 }
@@ -16,7 +16,7 @@ JsonRootElement::JsonRootElement(const std::map<std::string, std::string> &value
 JsonRootElement::~JsonRootElement()
 { }
 
-JsonRootElement &JsonRootElement::setValue(const std::list<std::string, std::string> &value)
+JsonRootElement &JsonRootElement::setValue(const std::list<std::string> &value)
 {
     return *this;
 }
@@ -46,3 +46,4 @@ unsigned int JsonRootElement::length()
 {
     return result.length();
 }
+

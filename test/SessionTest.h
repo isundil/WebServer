@@ -1,6 +1,10 @@
 #pragma once
 
+#include <map>
+#include <string>
 #include "../WebServer/AWebPage.h"
+#include "../WebServer/HttpClient.h"
+#include "../WebServer/Session.h"
 #include "../WebServer/JsonRootElement.h"
 
 class SessionTest : public AWebPage

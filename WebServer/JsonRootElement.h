@@ -7,11 +7,11 @@ class JsonRootElement : public ARootElement
 {
 public:
     JsonRootElement();
-    JsonRootElement(const std::list<std::string, std::string> &value);
+    JsonRootElement(const std::list<std::string> &value);
     JsonRootElement(const std::map<std::string, std::string> &value);
     virtual ~JsonRootElement();
 
-    JsonRootElement &setValue(const std::list<std::string, std::string> &value);
+    JsonRootElement &setValue(const std::list<std::string> &value);
     JsonRootElement &setValue(const std::map<std::string, std::string> &value);
 
     const std::string getValue();
@@ -20,3 +20,4 @@ public:
 private:
     std::string result;
 };
+

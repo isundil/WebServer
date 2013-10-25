@@ -10,7 +10,7 @@
 #include "../WebServer/Response.h"
 #include "../WebServer/RawRootElement.h"
 
-//#include "SessionTest.h"
+#include "SessionTest.h"
 #include "FormTest.h"
 
 class SessionData: public SessionStorage
@@ -39,7 +39,10 @@ class IndexPage : public AWebPage
 
 		std::string sessions[8] = { "Annie", "Arielle", "Anna", "Camille", "Coralie", "Caroline", "Cyntia", "Cyndie" };
         if (sess->storage() == NULL)
+        {
             sess->storage(new SessionData(sessions[rand() % 8]));
+            sess->setValue("name", ((SessionData *)(sess->storage()))->getValue());
+        }
         //re->setElement(new RawRootElement("<!DOCTYPE html><html><body><form method='post' action='#'><input type='text' name='a' /><input type='text' name='b' /><input type='submit' /></form></body></html>\n"));
         html::HtmlRootElement * htmlRoot = new html::HtmlRootElement("Example page");
         re->setElement(htmlRoot);
@@ -65,7 +68,7 @@ int main(int ac, char **av)
 	(void)ac; (void)av;
 	WebServer *ws;
 	try {
-		ws = new WebServer(atoi(av[1]));
+		ws = new WebServer(8080);
 	}
 	catch (SocketException &e)
 	{
@@ -74,7 +77,7 @@ int main(int ac, char **av)
 	}
 
     ws->registerRoute<IndexPage>();
-//    ws->registerRoute<SessionTest>();
+    ws->registerRoute<SessionTest>();
     ws->registerRoute<FormTest>();
     ws->registerDirectory("/home/cafeine/projects/WebServer/", "/public/", true, true);
 

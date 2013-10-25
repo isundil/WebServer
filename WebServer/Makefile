@@ -17,6 +17,7 @@ SRC=	HtmlRootElement.cpp		\
 		DirContentRootElem.cpp	\
 		FileElement.cpp			\
 		MappedDirectory.cpp		\
+		JsonRootElement.cpp		\
 		Meta.cpp				\
 		Paragraph.cpp			\
 		RawRootElem.cpp			\

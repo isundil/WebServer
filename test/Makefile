@@ -5,7 +5,7 @@ SRC=	Source.cpp
 
 OBJ=	$(SRC:.cpp=.o)
 
-CXX=	clang++ -W -Wall -Wextra -ansi -pedantic -std=c++11 -g3
+CXX=	g++ -W -Wall -Wextra -ansi -pedantic -std=c++11 -g3
 
 $(NAME):	all
 
