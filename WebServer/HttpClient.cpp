@@ -7,6 +7,7 @@
 #include "Session.h"
 #include "Response.h"
 #include "HtmlRootElement.h"
+#include "Util.h"
 #include "Meta.h"
 #include "Form.h"
 
@@ -28,6 +29,8 @@ HttpClient::~HttpClient()
     delete response;
     if (form)
         delete form;
+    for each (auto i in ssList)
+        delete i.first;
 }
 
 std::string HttpClient::getRespondStringCode(unsigned short code)
@@ -106,18 +109,90 @@ bool HttpClient::addParam(const std::string &param)
     return (true);
 }
 
-HttpClient & HttpClient::readData()
+HttpClient & HttpClient::readDataUrlencoded()
 {
     const unsigned int dataLen = req->getDataLength();
     char * buffer;
 
     if (req->getData().size() != 0 || dataLen == 0)
         return *this;
-    buffer = new char[dataLen +1];
+    buffer = new char[dataLen + 1];
     this->getSocket()->readBytes(buffer, dataLen);
     req->parseData(buffer);
     delete [] buffer;
     return *this;
+}
+
+int strpos(const char *a, const std::string &b, unsigned int len, unsigned int pos)
+{
+    if (len < b.length())
+        return -1;
+    if (memcmp(a, b.c_str(), b.length()) == 0)
+        return pos;
+    return strpos(a + 1, b, len - 1, pos + 1);
+}
+
+HttpClient & HttpClient::readDataMultipart()
+{
+    std::stringstream *ss = new std::stringstream();
+    char * buffer = new char[1024];
+    const std::string boundary = getSocket()->readLine(false);
+    int len = 0;
+    unsigned int buflen;
+    int bufpos =0;
+    bool eof = false;
+
+    while (!eof && boundary[0])
+    {
+        buflen = 0;
+        while (!eof)
+        {
+            if (bufpos == 0)
+            {
+                try {
+                    getSocket()->readBytes(buffer, 1024);
+                }
+                catch (EofException &)
+                {
+                    eof = true;
+                    ss->write("\0", 1);
+                    ssList.push_back(std::pair<std::stringstream *, unsigned int>(ss, buflen));
+                    ss = new std::stringstream();
+                    break;
+                }
+            }
+            len = strpos(&buffer[bufpos], boundary, 1024 - bufpos);
+            if (len == -1)
+            {
+                std::string c = &buffer[bufpos];
+                ss->write(&buffer[bufpos], 1024 - bufpos);
+                buflen += 1024;
+                bufpos = 0;
+            }
+            else
+            {
+                ss->write(&buffer[bufpos], len);
+                bufpos += len + boundary.length() +2;
+                ssList.push_back(std::pair<std::stringstream *, unsigned int>(ss, buflen + len));
+                ss = new std::stringstream();
+                buflen = 0;
+                break;
+            }
+        }
+    }
+    delete [] buffer;
+    delete ss;
+    for each (auto i in ssList)
+        req->parseMultipart(i);
+    return *this;
+}
+
+HttpClient & HttpClient::readData()
+{
+    std::string contentType = req->getParameter("Content-Type");
+    if (contentType.find("multipart/form-data") == 0)
+        return readDataMultipart();
+    return readDataUrlencoded();
 }
 
 void HttpClient::sessionUpdate()
@@ -248,7 +323,7 @@ const std::map<std::string, std::string> HttpClient::getPostData() const
 
 HttpClient &HttpClient::setForm(html::Form *f)
 {
-    form = new html::Form(*f, getPostData());
+    form = new html::Form(*f, getPostData(), req->getFileData());
     return *this;
 }
 

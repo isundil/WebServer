@@ -163,6 +163,14 @@ private:
     * Update the sessions, removing all the expired one
     */
     void sessionUpdate();
+    /*!
+    * Read data sent from the client using the urlENcoded format
+    */
+    HttpClient & readDataUrlencoded();
+    /*!
+    * Read data sent from the client using the multipart format
+    */
+    HttpClient & readDataMultipart();
 
 private:
     /*!
@@ -197,4 +205,9 @@ private:
     * The form sent by the client
     */
     html::Form *form;
+
+    /*!
+    * The form data, in the case of the Form is Multipart type
+    */
+    std::vector<std::pair<std::stringstream *, unsigned int> > ssList;
 };

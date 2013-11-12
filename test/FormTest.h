@@ -10,6 +10,7 @@
 #include "../WebServer/TextBox.h"
 #include "../WebServer/PasswordBox.h"
 #include "../WebServer/RawRootElement.h"
+#include "../WebServer/FileField.h"
 
 class FormTest: public AWebPage
 {
@@ -20,11 +21,12 @@ public:
         a1 = new html::Form::HiddenField("a1", "b1");
         a2 = new html::Form::HiddenField("a2", "b2");
         a3 = new html::Form::HiddenField("a3", "b3");
+        file = new html::Form::FileField("testFile");
         username = new html::Form::TextBox("username");
         password = new html::Form::PasswordBox("password");
         btSend = new html::Form::SubmitButton("Send the pat&eacute;");
 
-        *f << a1 << a2 << a3 << username << password << btSend;
+        *f << a1 << a2 << a3 << username << password << file << btSend;
 
         registerForm(f);
     }
@@ -37,6 +39,7 @@ public:
         delete a3;
         delete username;
         delete password;
+        delete file;
         delete btSend;
     }
 
@@ -63,6 +66,9 @@ public:
             return;
         e = new RawRootElement(form->debug());
 
+        html::Form::FileField *f = (html::Form::FileField *)(form->getChild("testFile"));
+        f->data()->save("D:\\avxc");
+
         c->responseGet()->setElement(e);
     }
 
@@ -75,4 +81,5 @@ private:
     html::Form::TextBox *username;
     html::Form::PasswordBox *password;
     html::Form::SubmitButton *btSend;
+    html::Form::FileField *file;
 };

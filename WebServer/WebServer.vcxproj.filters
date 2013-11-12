@@ -117,6 +117,9 @@
     <ClCompile Include="BasicInput.cpp">
       <Filter>Fichiers sources\html\Form</Filter>
     </ClCompile>
+    <ClCompile Include="FileField.cpp">
+      <Filter>Fichiers sources\html\Form</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WebServer.hpp">
@@ -206,5 +209,13 @@
     <ClInclude Include="BasicInput.h">
       <Filter>Fichiers d%27en-tête\html\Form</Filter>
     </ClInclude>
+    <ClInclude Include="FileField.h">
+      <Filter>Fichiers d%27en-tête\html\Form</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Makefile">
+      <Filter>Fichiers de ressources</Filter>
+    </None>
   </ItemGroup>
 </Project>

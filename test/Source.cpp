@@ -43,10 +43,10 @@ class IndexPage : public AWebPage
             sess->storage(new SessionData(sessions[rand() % 8]));
             sess->setValue("name", ((SessionData *)(sess->storage()))->getValue());
         }
-        //re->setElement(new RawRootElement("<!DOCTYPE html><html><body><form method='post' action='#'><input type='text' name='a' /><input type='text' name='b' /><input type='submit' /></form></body></html>\n"));
-        html::HtmlRootElement * htmlRoot = new html::HtmlRootElement("Example page");
-        re->setElement(htmlRoot);
-        htmlRoot->addScript("test.js").addStyle("test.css").addScript("script2.js");
+        re->setElement(new RawRootElement("<!DOCTYPE html><html><body><form method='post' action='#' enctype=\"multipart/form-data\"><input type=\"file\" name=\"testFile\"/><input type='submit' /></form></body></html>\n"));
+        //html::HtmlRootElement * htmlRoot = new html::HtmlRootElement("Example page");
+        //re->setElement(htmlRoot);
+        //htmlRoot->addScript("test.js").addStyle("test.css").addScript("script2.js");
         //if (!s)
         //    client->sessionDestroy();
     }

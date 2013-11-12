@@ -4,6 +4,8 @@
 #include <string>
 #include "Cookie.h"
 
+class FileInputData;
+
 class InvalidRequestException : public std::exception
 {
 public:
@@ -45,9 +47,15 @@ public: //public methods
     const std::string getHost() const;
 	CookieManager * getCookies();
 
+    const std::string getParameter(const std::string &name) const;
+    const std::string getMultipartBoundary() const;
+
     const std::map<std::string, std::string> getData() const;
+    const std::map<std::string, FileInputData *> getFileData() const;
     unsigned int getDataLength() const;
+
     void parseData(const char * data);
+    void parseMultipart(const std::pair<std::stringstream *, unsigned int> &line);
 
     void debug() const;
 
@@ -57,6 +65,7 @@ public: //public static
 
 private: //privates method
 	void evalCookies(const std::string &);
+    std::string trimMultipartParameter(const std::string &in);
 
 private: //private attributes
     std::list<std::pair<const std::string, const std::string> > paramList;
@@ -65,4 +74,5 @@ private: //private attributes
     std::string httpVersion;
 	CookieManager cookieMng;
     std::map<std::string, std::string> data;
+    std::map<std::string, FileInputData *> fileData;
 };

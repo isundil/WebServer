@@ -6,6 +6,7 @@
 #include "HttpError.h"
 #include "Response.h"
 #include "DirContentRootElem.h"
+#include "RawRootElement.h"
 
 WebServer::WebServer(unsigned int port) : listeningPort(port)
 {
@@ -48,12 +49,13 @@ void WebServer::start()
             else if (dynamic_cast<Error404 *>(ptr) != NULL)
                 client->respondCode(404);
         }
-        //catch (std::exception &e)
-        //{
-        //    (void) e;
-        //    //TODO replace client response
-        //    client->respondCode(500);
-        //}
+        catch (std::exception &e)
+        {
+            (void) e;
+            //TODO replace client response
+            client->responseGet()->setElement(new RawRootElement(e.what()));
+            client->respondCode(500);
+        }
         try {
             if (haveToSend)
                 client->sendResponse();
@@ -82,7 +84,7 @@ bool WebServer::execRequest(HttpClient *client)
     for (auto i = routes.begin(); i != routes.end(); i++)
         if (*(*i) == *(client->getRequest()))
         {
-            (*i)->requestHandler(client->getRequest()->getRequestType(), client); //TODO other requests types
+            (*i)->requestHandler(client->getRequest()->getRequestType(), client);
             return true;
         }
     if (client->getRequest()->getRequestType() == HttpRequest::reqtype::get)

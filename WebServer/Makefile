@@ -15,6 +15,7 @@ SRC=	HtmlRootElement.cpp		\
 		Response.cpp			\
 		AHtmlNode.cpp			\
 		DirContentRootElem.cpp	\
+		Anchor.cpp				\
 		FileElement.cpp			\
 		MappedDirectory.cpp		\
 		JsonRootElement.cpp		\

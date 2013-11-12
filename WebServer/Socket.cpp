@@ -158,13 +158,29 @@ unsigned short WebServer::ClientSocket::getPort() const
     return this->port;
 }
 
+bool WebServer::ClientSocket::isreadable() const
+{
+    fd_set readSet;
+    timeval timeout;
+
+    timeout.tv_sec = timeout.tv_usec = 0;
+    FD_ZERO(&readSet);
+    FD_SET(*((SOCKET *) socket), &readSet);
+    select((*((SOCKET *) socket)) + 1, &readSet, NULL, NULL, &timeout);
+    return FD_ISSET(*((SOCKET *) socket), &readSet) == 1;
+}
+
 void WebServer::ClientSocket::readBytes(char * resultBuf, unsigned int _len)
 {
     if (bufIndex[0] == bufIndex[1])
     {
+        if (!isreadable())
+            throw EofException();
         int rd = recv(*(SOCKET*) socket, &buf[bufIndex[0]], 2048 - bufIndex[0], 0);
-        if (rd == -1)
+        if (rd == SOCKET_ERROR)
             throw SocketException("recv()", "", WSAGetLastError());
+        if (rd == 0)
+            throw EofException();
         bufIndex[1] += rd;
         if (rd == 2048 - bufIndex[0])
         {
@@ -189,21 +205,22 @@ void WebServer::ClientSocket::readBytes(char * resultBuf, unsigned int _len)
         int remainLen = len - (2048 - bufIndex[0]);
         memcpy(&resultBuf[(2048 - bufIndex[0]) % 2048], buf, remainLen);
     }
-    bufIndex[0] += len + 1;
+    bufIndex[0] += len;
     while (bufIndex[0] >= 2048)
         bufIndex[0] -= 2048;
     if (len == 2048 - 1)
         bufIndex[0] = bufIndex[1];
     resultBuf[len] = '\0';
-    for (unsigned int i = 0; i < len; i++)
-        if (resultBuf[i] == '\r')
-            resultBuf[i] = 0;
+    if (_len > 2048 && len == 2048)
+        this->readBytes(&resultBuf[2048], _len - 2048);
 }
 
-std::string WebServer::ClientSocket::readLine()
+std::string WebServer::ClientSocket::readLine(bool wait)
 {
     if (bufIndex[0] == bufIndex[1])
     {
+        if (!wait && !isreadable())
+            return "";
         int rd = recv(*(SOCKET*)socket, &buf[bufIndex[0]], 2048-bufIndex[0], 0);
         if (rd == -1)
             throw SocketException("recv()", "", WSAGetLastError());

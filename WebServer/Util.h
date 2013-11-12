@@ -25,3 +25,5 @@ void replace_all(std::string &in, const std::string &before, const std::string &
 * ex: "a+b%3D" -> "a b="
 */
 std::string url_decode(const std::string &in);
+
+int strpos(const char *a, const std::string &b, unsigned int size, unsigned int pos = 0);

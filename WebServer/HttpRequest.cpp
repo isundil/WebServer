@@ -1,7 +1,7 @@
-
 #include <iostream>
 #include <map>
 #include "HttpRequest.h"
+#include "FileField.h"
 #include "Util.h"
 
 enum HttpRequest::reqtype HttpRequest::stringToReqType(const std::string &input)
@@ -82,6 +82,11 @@ const std::map<std::string, std::string> HttpRequest::getData() const
     return data;
 }
 
+const std::map<std::string, FileInputData *> HttpRequest::getFileData() const
+{
+    return fileData;
+}
+
 unsigned int HttpRequest::getDataLength() const
 {
     for (auto i = paramList.cbegin(); i != paramList.cend(); i++)
@@ -111,6 +116,71 @@ void HttpRequest::parseData(const char *buffer)
     }
 }
 
+void HttpRequest::parseMultipart(const std::pair<std::stringstream *, unsigned int> &line)
+{
+    unsigned long remainingLen = line.second;
+    std::string buffer;
+    std::string firstLineStr;
+    std::map<std::string, std::string> parameters;
+    std::list<std::string> paramsList;
+
+    std::getline(*(line.first), firstLineStr);
+    remainingLen -= firstLineStr.length() + 1;
+    paramsList = string_split(firstLineStr, ';');
+    for each (auto i in paramsList)
+    {
+        size_t pos = i.find_first_of(":=");
+        if (pos == i.npos)
+            continue;
+        parameters[trimMultipartParameter(i.substr(0, pos))] = trimMultipartParameter(i.substr(pos + 1));
+    }
+    if (parameters.find("Content-Disposition") == parameters.end())
+        return;
+    if (parameters.find("filename") == parameters.end())
+    {
+        std::string result;
+
+        std::getline(*(line.first), result);
+        std::getline(*(line.first), result);
+        if (result[0] != '\0' && result[result.length() - 1] == '\r')
+            result = result.substr(0, result.length() -1);
+        this->data[parameters["name"]] = url_decode(result);
+    }
+    else
+    {
+        std::getline(*(line.first), firstLineStr);
+        fileData[parameters["name"]] = new FileInputData(parameters["filename"], line.first, remainingLen -2);
+    }
+}
+
+std::string HttpRequest::trimMultipartParameter(const std::string &in)
+{
+    std::string result;
+    char *buffer;
+    int begin = 0;
+    int end = in.length();
+
+    buffer = new char[in.length() + 1];
+    memcpy(buffer, in.c_str(), in.length() + 1);
+
+    while (buffer[begin] == ' ')
+        begin++;
+    if (buffer[begin] != '"')
+        while (buffer[end] == ' ')
+            buffer[end--] = '\0';
+    else
+    {
+        begin++;
+        end = begin + 1;
+        while (buffer[end] != '"' && buffer[end])
+            end++;
+        buffer[end] = '\0';
+    }
+    result = std::string(&buffer[begin]);
+    delete [] buffer;
+    return result;
+}
+
 const std::string HttpRequest::getHost() const
 {
     for (auto i = paramList.cbegin(); i != paramList.cend(); i++)
@@ -138,6 +208,25 @@ const std::string HttpRequest::getRequestUrl() const
 const std::string HttpRequest::getHttpVersion() const
 {
     return httpVersion;
+}
+
+const std::string HttpRequest::getParameter(const std::string &key) const
+{
+    for each (std::pair<std::string, std::string> s in paramList)
+        if (s.first == key)
+            return s.second;
+    return "";
+}
+
+const std::string HttpRequest::getMultipartBoundary() const
+{
+    std::string _line = getParameter("Content-Type");
+    int pos;
+
+    if (_line == "")
+        return "";
+    pos = strpos(_line.c_str(), "boundary=", _line.length());
+    return _line.substr(pos + 9);
 }
 
 void HttpRequest::evalCookies(const std::string &cookieString)

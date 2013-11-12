@@ -2,6 +2,7 @@
 #include "AHtmlNode.h"
 #include "HttpRequest.h"
 
+class FileInputData;
 class AWebPage;
 class HttpClient;
 
@@ -15,12 +16,13 @@ namespace html
         class SubmitButton;
         class TextBox;
         class PasswordBox;
+        class FileField;
         template <typename T>class ABasicInput;
 
     public:
         Form(const std::string & name);
         Form(const std::string & url, enum HttpRequest::reqtype);
-        Form(const Form &other, const std::map<std::string, std::string> values);
+        Form(const Form &other, const std::map<std::string, std::string> &values, const std::map<std::string, FileInputData *> &files);
         Form(const Form &other);
         virtual ~Form();
 
@@ -30,9 +32,11 @@ namespace html
         Form &methodSet(enum HttpRequest::reqtype = HttpRequest::post);
         enum HttpRequest::reqtype methodGet() const;
 
-        AInput *getChild(const std::string &name) const;
+        AHtmlNode *getChild(const std::string &name) const;
         const std::map<std::string, const AInput *>getValues() const;
 
         std::string debug() const;
+
+        virtual const std::string toString();
     };
 }

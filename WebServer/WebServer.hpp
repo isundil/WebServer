@@ -2,10 +2,19 @@
 
 #include <string>
 #include <list>
+#include <vector>
+#include <stdexcept>
 #include "ARootElement.h"
 
 class HttpClient;
 class AWebPage;
+
+class EofException : public std::runtime_error
+{
+public:
+    EofException() : std::runtime_error("Eof")
+    { }
+};
 
 /*!
 * This class represents a WebServer, which is
@@ -86,7 +95,7 @@ public: //public nested
         /*!
         * read one line on the client socket. Use the round-buffer to read
         */
-        std::string readLine();
+        std::string readLine(bool wait =true);
         /*!
         * Write the given string into the socket
         */
@@ -103,6 +112,11 @@ public: //public nested
         * Get the client-side port
         */
         unsigned short getPort() const;
+
+        /*!
+        * Return true if data is readable on socket
+        */
+        bool isreadable() const;
 
     private:
         /*!
