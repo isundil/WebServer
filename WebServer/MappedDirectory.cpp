@@ -36,6 +36,7 @@ std::string WebServer::MappedDirectory::getExtendedPath(const std::list<std::str
 std::string WebServer::MappedDirectory::doMatch(const std::string &url)
 {
     std::list<std::string> urlParts = string_split(url, '/');
+    std::string result;
 
     auto i = virtualPathPart.cbegin();
     auto j = urlParts.cbegin();
@@ -52,7 +53,11 @@ std::string WebServer::MappedDirectory::doMatch(const std::string &url)
         if (*i != *j)
             return "";
     }
-    return realPath;
+    urlParts.erase(urlParts.begin(), j);
+    result = realPath;
+    for each (std::string c in urlParts)
+        result.append("/").append(c);
+    return result;
 }
 
 bool WebServer::MappedDirectory::isDirectory(const std::string &filename)

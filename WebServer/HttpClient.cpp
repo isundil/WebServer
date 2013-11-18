@@ -150,6 +150,7 @@ HttpClient & HttpClient::readDataMultipart()
             if (bufpos == 0)
             {
                 try {
+                    memset(buffer, 0, sizeof(*buffer) * 1024);
                     getSocket()->readBytes(buffer, 1024);
                 }
                 catch (EofException &)

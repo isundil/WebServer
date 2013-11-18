@@ -79,7 +79,7 @@ int main(int ac, char **av)
     ws->registerRoute<IndexPage>();
     ws->registerRoute<SessionTest>();
     ws->registerRoute<FormTest>();
-    ws->registerDirectory("/home/cafeine/projects/WebServer/", "/public/", true, true);
+    ws->registerDirectory("C:\\Program Files (x86)\\wamp\\www\\minecraft", "/minecraft", true, true);
 
     ws->start();
 	delete ws;

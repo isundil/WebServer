@@ -123,6 +123,7 @@ void HttpRequest::parseMultipart(const std::pair<std::stringstream *, unsigned i
     std::string firstLineStr;
     std::map<std::string, std::string> parameters;
     std::list<std::string> paramsList;
+    std::streampos begin;
 
     std::getline(*(line.first), firstLineStr);
     remainingLen -= firstLineStr.length() + 1;
@@ -149,8 +150,12 @@ void HttpRequest::parseMultipart(const std::pair<std::stringstream *, unsigned i
     else
     {
         std::getline(*(line.first), firstLineStr);
-        fileData[parameters["name"]] = new FileInputData(parameters["filename"], line.first, remainingLen -2);
+        remainingLen -= firstLineStr.length() + 1;
+        std::getline(*(line.first), firstLineStr);
+        remainingLen -= firstLineStr.length() + 1;
+        fileData[parameters["name"]] = new FileInputData(parameters["filename"], line.first, line.second - remainingLen, line.second -2);
     }
+    line.first->seekg(line.second - remainingLen, std::ios_base::beg);
 }
 
 std::string HttpRequest::trimMultipartParameter(const std::string &in)

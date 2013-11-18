@@ -6,15 +6,16 @@ class FileInputData
 {
 public:
     FileInputData();
-    FileInputData(const std::string &filename, std::stringstream * const, unsigned long size);
+    FileInputData(const std::string &filename, std::stringstream * const, unsigned long begin, unsigned long end);
     virtual ~FileInputData();
 
     virtual void save(const std::string &filename) const;
 
 private:
     std::stringstream *ss;
-    std::string _filename;
-    unsigned long size;
+    std::string filename;
+    unsigned long begin;
+    unsigned long end;
 };
 
 namespace html

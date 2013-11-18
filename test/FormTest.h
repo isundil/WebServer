@@ -67,7 +67,7 @@ public:
         e = new RawRootElement(form->debug());
 
         html::Form::FileField *f = (html::Form::FileField *)(form->getChild("testFile"));
-        f->data()->save("D:\\avxc");
+        f->data()->save(((html::Form::TextBox *)(form->getChild("username")))->stringValue());
 
         c->responseGet()->setElement(e);
     }

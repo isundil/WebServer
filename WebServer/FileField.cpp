@@ -6,11 +6,12 @@ FileInputData::FileInputData()
     ss = nullptr;
 }
 
-FileInputData::FileInputData(const std::string &f, std::stringstream * const s, unsigned long _s)
+FileInputData::FileInputData(const std::string &f, std::stringstream * const s, unsigned long _begin, unsigned long _end)
 {
     ss = s;
-    _filename = f;
-    size = _s;
+    filename = f;
+    begin = _begin;
+    end = _end;
 }
 
 FileInputData::~FileInputData()
@@ -18,18 +19,29 @@ FileInputData::~FileInputData()
 
 void FileInputData::save(const std::string &filename) const
 {
-    std::ofstream o(filename);
+    //std::ofstream o(filename);
+    FILE *o;
     char buffer[512];
+    std::streamoff toRead;
+    std::streamoff pos;
+    const std::streamoff size = end - begin;
 
-    o.open(filename, std::ios_base::trunc || std::ios_base::out);
-    if (!o.is_open())
+    pos = ss->tellg();
+    ss->seekg(begin);
+    fopen_s(&o, filename.c_str(), "w+b");
+    //o.open(filename, std::ios_base::trunc | std::ios_base::out | std::ios_base::binary);
+    if (!o)
         throw std::runtime_error("Cannot open file " +filename +" for writting");
     for (unsigned long i = 0; i < size; i += 512)
     {
-        ss->read(buffer, i +512 < size ? size-i : 512);
-        o.write(buffer, i + 512 < size ? size - i : 512);
+        toRead = i + 512 > size ? size - i : 512;
+        ss->read(buffer, toRead);
+        fwrite(buffer, toRead, 1, o);
+        //o.write(buffer, toRead);
     }
-    o.close();
+    fclose(o);
+    //o.close();
+    ss->seekg(pos);
 }
 
 html::Form::FileField::FileField()
