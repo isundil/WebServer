@@ -4,20 +4,16 @@
 
 using namespace html;
 
-Form::Form(const std::string &name) : Form("#", HttpRequest::post)
+Form::Form(const std::string &name, enum HttpRequest::reqtype type, const std::string &act)
 {
     *this << new Form::HiddenField("name", name);
-}
-
-Form::Form(const std::string &act, enum HttpRequest::reqtype type)
-{
     actionSet(act).methodSet(type);
     canHaveChildren = true;
     canHaveStyle = true;
-    name = "form";
+    this->name = "form";
 }
 
-Form::Form(const Form &other) : Form(other.actionGet(), other.methodGet())
+Form::Form(const Form &other) : Form(other.getFormName(), other.methodGet(), other.actionGet())
 {
     Form::AInput *input;
     Form::FileField *file;
@@ -31,6 +27,16 @@ Form::Form(const Form &other) : Form(other.actionGet(), other.methodGet())
         else if (file != nullptr)
             *this << file->clone();
     }
+}
+
+std::string Form::getFormName() const
+{
+    auto i = this->getChild("name");
+    if (i == nullptr)
+        throw std::runtime_error("noname");
+    if (dynamic_cast<html::Form::HiddenField *> (i) == nullptr)
+        throw std::runtime_error("noname");
+    return ((Form::AInput *)i)->stringValue();
 }
 
 Form::Form(const Form &other, const std::map<std::string, std::string> &values, const std::map<std::string, FileInputData *> &files) : Form(other)

@@ -212,6 +212,9 @@
     <ClInclude Include="FileField.h">
       <Filter>Fichiers d%27en-tête\html\Form</Filter>
     </ClInclude>
+    <ClInclude Include="config.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile">

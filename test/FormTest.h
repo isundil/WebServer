@@ -17,7 +17,7 @@ class FormTest: public AWebPage
 public:
     FormTest()
     {
-        f = new html::Form(std::string("test"));
+        f = new html::Form(std::string("test"), HttpRequest::get);
         a1 = new html::Form::HiddenField("a1", "b1");
         a2 = new html::Form::HiddenField("a2", "b2");
         a3 = new html::Form::HiddenField("a3", "b3");
@@ -26,7 +26,7 @@ public:
         password = new html::Form::PasswordBox("password");
         btSend = new html::Form::SubmitButton("Send the pat&eacute;");
 
-        *f << a1 << a2 << a3 << username << password << file << btSend;
+        *f << a1 << a2 << a3 << username << password << btSend;
 
         registerForm(f);
     }
@@ -50,6 +50,8 @@ public:
 
     void requestGet(HttpClient * c)
     {
+        if (c->getForm() != nullptr)
+            return requestPost(c);
         html::HtmlRootElement *h = new html::HtmlRootElement();
 
         *h << f;
@@ -66,8 +68,8 @@ public:
             return;
         e = new RawRootElement(form->debug());
 
-        html::Form::FileField *f = (html::Form::FileField *)(form->getChild("testFile"));
-        f->data()->save(((html::Form::TextBox *)(form->getChild("username")))->stringValue());
+        //html::Form::FileField *f = (html::Form::FileField *)(form->getChild("testFile"));
+        //f->data()->save(((html::Form::TextBox *)(form->getChild("username")))->stringValue());
 
         c->responseGet()->setElement(e);
     }

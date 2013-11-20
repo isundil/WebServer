@@ -20,8 +20,7 @@ namespace html
         template <typename T>class ABasicInput;
 
     public:
-        Form(const std::string & name);
-        Form(const std::string & url, enum HttpRequest::reqtype);
+        Form(const std::string & name, enum HttpRequest::reqtype = HttpRequest::post, const std::string &action = "#");
         Form(const Form &other, const std::map<std::string, std::string> &values, const std::map<std::string, FileInputData *> &files);
         Form(const Form &other);
         virtual ~Form();
@@ -37,6 +36,7 @@ namespace html
 
         std::string debug() const;
 
+        std::string getFormName() const;
         virtual const std::string toString();
     };
 }

@@ -58,7 +58,18 @@ HttpRequest *HttpRequest::setRequest(const std::string & request)
     for (auto i = requestFields.cbegin(); i != requestFields.cend(); i++)
     {
         if (i == requestFields.cbegin())
+        {
+            std::string::size_type pos;
+            std::string params;
+
             requestUrl = url_decode(*(i));
+            if ((pos = requestUrl.find("?")) != requestUrl.npos)
+            {
+                params = requestUrl.substr(pos +1);
+                requestUrl.erase(pos);
+                this->parseData(params.c_str());
+            }
+        }
         else
             httpVersion = *(i);
     }

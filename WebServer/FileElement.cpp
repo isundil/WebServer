@@ -46,3 +46,22 @@ void WebServer::FileElement::send(ClientSocket * sock)
         i += realRd;
     }
 }
+
+std::string WebServer::FileElement::getExtension() const
+{
+    std::string result = path;
+
+    result.erase(0, result.find_last_of("./") +1);
+    return result;
+}
+
+std::string WebServer::FileElement::getMimeType(const std::map<std::string, std::string> &mime) const
+{
+    const std::string ext = getExtension();
+    const auto it = mime.find(ext);
+
+    if (it != mime.cend())
+        return (*it).second;
+    //TODO default mime
+    return "";
+}

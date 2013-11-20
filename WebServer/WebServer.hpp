@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <map>
 #include <list>
 #include <vector>
 #include <stdexcept>
@@ -219,8 +220,11 @@ private: //private nested
         ~FileElement();
 
         const std::string getValue();
+        std::string getExtension() const;
         unsigned int length();
         void send(ClientSocket * sock);
+
+        std::string getMimeType(const std::map<std::string, std::string> &mimes) const;
 
     private:
         long long size;
@@ -253,6 +257,11 @@ private: //private functions
     */
     bool sendFile(const std::string & path, HttpClient * client, bool isDirectory);
 
+    /*
+    * parse the mimtype file
+    */
+    std::map<std::string, std::string> *initMimeType(const std::string &filename) const;
+
 private: //private attributes
     /*!
     * Webmaster infos
@@ -274,4 +283,9 @@ private: //private attributes
     * list of all the mapped folders
     */
     std::list<MappedDirectory *>mappedDirectories;
+
+    /*!
+    * mime type list
+    */
+    std::map<std::string, std::string> *mimeList;
 };

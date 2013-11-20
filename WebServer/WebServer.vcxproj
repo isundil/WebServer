@@ -114,6 +114,7 @@
     <ClInclude Include="Anchor.h" />
     <ClInclude Include="AWebPage.h" />
     <ClInclude Include="BasicInput.h" />
+    <ClInclude Include="config.h" />
     <ClInclude Include="Cookie.h" />
     <ClInclude Include="DirContentRootElem.h" />
     <ClInclude Include="FileField.h" />
